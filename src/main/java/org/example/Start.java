@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.Uitils.PrintAST;
+import org.example.expr.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +18,20 @@ public class Start {
 //        runFromTerminal();
 
         runFromFile();
+
+
+        Expr expression = new Binary(
+                new Unary(
+                        new Token(TokenType.MINUS, "-", null, 1),
+                        new Literal(123)),
+                new Token(TokenType.STAR, "*", null, 1),
+                new Grouping(
+                        new Literal(45.67)));
+
+
+        PrintAST printer = new PrintAST();
+        System.out.println(printer.printAST(expression));
+
 
     }
 
