@@ -109,7 +109,7 @@ public class Lexer {
     }
 
     private void identifier(){
-        while (code.charAt(current) != ' '){
+        while (isChar(peek())){
             current ++;
         }
         String text = code.substring(start,current);

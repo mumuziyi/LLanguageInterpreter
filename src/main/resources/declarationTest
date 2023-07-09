@@ -1,0 +1,9 @@
+print x = 10;
+
+var x = 1;
+var y = 1;
+print x + y;
+
+var z = 1;
+z = 5;
+print z;

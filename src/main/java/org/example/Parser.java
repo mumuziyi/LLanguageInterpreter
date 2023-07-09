@@ -4,6 +4,7 @@ import org.example.expr.*;
 import org.example.stmt.Expression;
 import org.example.stmt.Print;
 import org.example.stmt.Stmt;
+import org.example.stmt.Var;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,12 +24,27 @@ public class Parser {
     public List<Stmt> parse(){
         List<Stmt> statements = new LinkedList<>();
         while (!isAtEnd()){
-            statements.add(statement());
+            statements.add(declaration());
         }
 
         return statements;
     }
 
+    private Stmt declaration(){
+        if (match(VAR)) return varDeclaration();
+        else return statement();
+    }
+
+    private Stmt varDeclaration(){
+        Token name = consume(IDENTIFIER, " Expected");
+
+        Expr initializer = null;
+        if (match(EQUAL)){
+            initializer = expression();
+        }
+        consume(SEMICOLON, "Expected ';' after variable declaration");
+        return new Var(name,initializer);
+    }
     private Stmt statement(){
         if (match(PRINT)) return printStatement();
 
@@ -46,8 +62,26 @@ public class Parser {
         return new Expression(expr);
     }
 
+
     private Expr expression(){
-        return equality();
+        return assignment();
+    }
+
+    private Expr assignment(){
+        Expr expr = equality();
+
+        if (match(EQUAL)){
+            Token equals = tokens.get(current - 1);
+            Expr value = assignment();
+
+            if (expr instanceof Variable){
+                Token name = ((Variable)expr).name;
+                return new Assign(name,value);
+            }
+
+            handler.outputErrorInfo("Invalid assignment target",equals.line);
+        }
+        return expr;
     }
 
     private Expr equality(){
@@ -114,17 +148,21 @@ public class Parser {
             consume(RIGHT_PAREN,"Expect ')' after expression ");
             return new Grouping(expr);
         }
+        if (match(IDENTIFIER)){
+            return new Variable(tokens.get(current - 1));
+        }
 
         handler.outputErrorInfo("Unexpected token in primary()",tokens.get(current).line);
         return null;
     }
 
-    private void consume(TokenType type, String errorMsg){
+    private Token consume(TokenType type, String errorMsg){
         if (!match(type)){
             handler.outputErrorInfo(errorMsg, tokens.get(current).line);
             System.out.println("Error: " + errorMsg);
             System.exit(0);
         }
+        return tokens.get(current - 1);
     }
 
     // check if the current token match the input.

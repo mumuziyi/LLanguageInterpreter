@@ -4,11 +4,13 @@ import org.example.expr.*;
 import org.example.stmt.Expression;
 import org.example.stmt.Print;
 import org.example.stmt.Stmt;
+import org.example.stmt.Var;
 
 import java.util.List;
 
 public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
+    Environment environment = new Environment();
 
 
     // Get a list of statements from Parser, execute every statement one by one
@@ -27,9 +29,24 @@ public class Interpreter {
         if (statement instanceof Print){
             executePrint(statement);
         }
+
         if (statement instanceof Expression){
             executeExpression(statement);
         }
+
+        if (statement instanceof Var){
+            executeVar(statement);
+        }
+    }
+
+    private void executeVar(Stmt statement){
+        Var var = (Var) statement;
+        Object value = null;
+        if (var.initializer != null){
+            value = evaluate(var.initializer);
+        }
+
+        environment.addVar(var.name.lexeme,value);
     }
 
     // For the printStmt, just output the value of the expression behind the print.
@@ -48,16 +65,25 @@ public class Interpreter {
 
     // get the result of the expression.
     private Object evaluate(Expr expr){
-        if (expr instanceof Binary){
-            return evaluateBinary(expr);
-        }else if (expr instanceof Unary){
-            return evaluateUnary(expr);
-        }else if (expr instanceof Literal){
-            return evaluateLiteral(expr);
-        }else if (expr instanceof Grouping){
-            return evaluateGrouping(expr);
-        }
+        if (expr instanceof Binary)return evaluateBinary(expr);
+        if (expr instanceof Unary)return evaluateUnary(expr);
+        if (expr instanceof Literal)return evaluateLiteral(expr);
+        if (expr instanceof Grouping)return evaluateGrouping(expr);
+        if (expr instanceof Variable)return evaluateVariable(expr);
+        if (expr instanceof Assign) return evaluateAssign(expr);
         return null;
+    }
+
+    private Object evaluateAssign(Expr expr){
+        Assign assign = (Assign) expr;
+        Object value = evaluate(assign.value);
+        environment.addVar(assign.name.lexeme,value);
+        return value;
+    }
+
+    private Object evaluateVariable(Expr expr){
+        Variable variable = (Variable) expr;
+        return environment.getValue(variable.name);
     }
     private Object evaluateGrouping(Expr expr){
         Grouping grouping = (Grouping) expr;
