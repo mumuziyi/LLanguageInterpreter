@@ -19,6 +19,21 @@ public class PrintAST {
         return builder.toString();
     }
 
+    private String printBinary(Expr expr){
+        StringBuilder builder = new StringBuilder();
+
+        Binary binary = (Binary) expr;
+        Expr left = binary.left;
+        Expr right = binary.right;
+        Token operator = binary.operator;
+
+        // 1 + 2 ---> (+ 1 2)
+        builder.append("( ").append(operator.lexeme).append("  ").append(printAST(left)).append("  ")
+                .append(printAST(right)).append(" )");
+
+        return builder.toString();
+    }
+
     private String printUnary(Expr expr){
         StringBuilder builder = new StringBuilder();
         Unary unary = (Unary) expr;
@@ -37,20 +52,7 @@ public class PrintAST {
         return builder.toString();
     }
 
-    private String printBinary(Expr expr){
-        StringBuilder builder = new StringBuilder();
 
-        Binary binary = (Binary) expr;
-        Expr left = binary.left;
-        Expr right = binary.right;
-        Token operator = binary.operator;
-
-        // 1 + 2 ---> (+ 1 2)
-        builder.append("( ").append(operator.lexeme).append("  ").append(printAST(left)).append("  ")
-                .append(printAST(right)).append(" )");
-
-        return builder.toString();
-    }
 
 
 }

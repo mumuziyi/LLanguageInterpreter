@@ -104,9 +104,11 @@ public class Lexer {
         return (c >= 'a' && c <= 'z') || (c >'A' && c < 'Z');
     }
     private void number(){
-        while (isDigit(peek())){
-            current++;
+        if (atEnd()){
+            addToken(NUMBER, Double.parseDouble(code.substring(start,current)));
+            return;
         }
+
 
         if (peek() == '.'){
             getCurAndMove();
@@ -117,6 +119,11 @@ public class Lexer {
                 current++;
             }
         }
+
+        while (isDigit(peek())){
+            current++;
+        }
+
         if (!Start.hadError){
             addToken(NUMBER, Double.parseDouble(code.substring(start,current)));
         }

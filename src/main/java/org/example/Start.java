@@ -19,18 +19,18 @@ public class Start {
 
         runFromFile();
 
-
-        Expr expression = new Binary(
-                new Unary(
-                        new Token(TokenType.MINUS, "-", null, 1),
-                        new Literal(123)),
-                new Token(TokenType.STAR, "*", null, 1),
-                new Grouping(
-                        new Literal(45.67)));
-
-
-        PrintAST printer = new PrintAST();
-        System.out.println(printer.printAST(expression));
+//
+//        Expr expression = new Binary(
+//                new Unary(
+//                        new Token(TokenType.MINUS, "-", null, 1),
+//                        new Literal(123)),
+//                new Token(TokenType.STAR, "*", null, 1),
+//                new Grouping(
+//                        new Literal(45.67)));
+//
+//
+//        PrintAST printer = new PrintAST();
+//        System.out.println(printer.printAST(expression));
 
 
     }
@@ -49,14 +49,13 @@ public class Start {
 
     // Get code form the file
     public static void runFromFile(){
-        String filePath = "src/main/resources/CodeFile1"; // 替换为实际文件的路径
+        String filePath = "src/main/resources/ParseFileTest"; // 替换为实际文件的路径
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String code;
             while ((code = reader.readLine()) != null) {
                 // 处理每一行的逻辑
-
                 tokenList.addAll(getTokenList(code));
 
                 line += 1;
@@ -78,6 +77,13 @@ public class Start {
         for (int i = 0; i < tokenList.size(); i++){
             System.out.println(tokenList.get(i).toString());
         }
+
+        Parser parser = new Parser(tokenList);
+        Expr expr = parser.parse();
+
+        PrintAST printer = new PrintAST();
+        System.out.println(printer.printAST(expr));
+
     }
 
 }
