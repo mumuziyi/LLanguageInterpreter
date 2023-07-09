@@ -1,7 +1,9 @@
 package org.example;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static org.example.TokenType.*;
 public class Lexer {
@@ -14,6 +16,27 @@ public class Lexer {
     // start index for the token. change if start scan next java.Token
     private int start = 0;
 
+    private static final Map<String, TokenType> keywords;static {
+        keywords = new HashMap<>();
+        keywords.put("and",    AND);
+        keywords.put("class",  CLASS);
+        keywords.put("else",   ELSE);
+        keywords.put("false",  FALSE);
+        keywords.put("for",    FOR);
+        keywords.put("fun", FUN);
+        keywords.put("if",     IF);
+        keywords.put("nil",    NIL);
+        keywords.put("or",     OR);
+        keywords.put("print",  PRINT);
+        keywords.put("return", RETURN);
+        keywords.put("super",  SUPER);
+        keywords.put("this",   THIS);
+        keywords.put("true",   TRUE);
+        keywords.put("var",    VAR);
+        keywords.put("while",  WHILE);
+        keywords.put("number",  NUMBER);
+        keywords.put("string",  STRING);
+    }
 
     List<Token> tokenList = new LinkedList<>();
 
@@ -74,14 +97,25 @@ public class Lexer {
                     number();
                     break;
                 }
-//                if (isChar(cur)){
-//                    string();
-//                }
+                if (isChar(cur)){
+                    identifier();
+                    break;
+                }
                 errorAndExceptionHandler.outputErrorInfo("Illegal token.",line);
                 Start.hadError = true;
 
         }
 
+    }
+
+    private void identifier(){
+        while (code.charAt(current) != ' '){
+            current ++;
+        }
+        String text = code.substring(start,current);
+        TokenType type = keywords.get(text);
+        if (type == null) type = IDENTIFIER;
+        addToken(type);
     }
 
     private void string(){

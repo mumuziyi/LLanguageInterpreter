@@ -1,36 +1,52 @@
 package org.example;
 
 import org.example.expr.*;
+import org.example.stmt.Expression;
+import org.example.stmt.Print;
+import org.example.stmt.Stmt;
+
+import java.util.List;
 
 public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
 
 
-    public Object interpreter(Expr expr){
+    // Get a list of statements from Parser, execute every statement one by one
+    public void interpreter(List<Stmt> statements){
         try {
-            Object object = evaluate(expr);
-            System.out.println(stringfy(object));
-            return object;
+            for (Stmt statement: statements){
+                execute(statement);
+            }
         }catch (Exception e){
             System.out.println("Interpreter Error: " + e);
         }
-        return null;
     }
 
-    private String stringfy(Object object){
-        if (object == null) return "nil";
-
-        if (object instanceof Double){
-            String text = object.toString();
-            if (text.endsWith(".0")){
-                text = text.substring(0,text.length() - 2);
-            }
-            return text;
+    // Check the type of the statement and execute it.
+    private void execute(Stmt statement){
+        if (statement instanceof Print){
+            executePrint(statement);
         }
-
-        return object.toString();
+        if (statement instanceof Expression){
+            executeExpression(statement);
+        }
     }
 
+    // For the printStmt, just output the value of the expression behind the print.
+    private void executePrint(Stmt statement){
+        Print print = (Print) statement;
+        Object value = evaluate(print.expr);
+        System.out.println(stringfy(value));
+    }
+
+    //
+    private void executeExpression(Stmt stmt){
+        Expression expression = (Expression) stmt;
+        evaluate(expression.expr);
+    }
+
+
+    // get the result of the expression.
     private Object evaluate(Expr expr){
         if (expr instanceof Binary){
             return evaluateBinary(expr);
@@ -132,7 +148,19 @@ public class Interpreter {
         return left.equals(right);
     }
 
+    private String stringfy(Object object){
+        if (object == null) return "nil";
 
+        if (object instanceof Double){
+            String text = object.toString();
+            if (text.endsWith(".0")){
+                text = text.substring(0,text.length() - 2);
+            }
+            return text;
+        }
+
+        return object.toString();
+    }
 
     // everything
     private boolean isTruthy(Object object){

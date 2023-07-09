@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.Uitils.PrintAST;
 import org.example.expr.*;
+import org.example.stmt.Stmt;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -79,10 +80,10 @@ public class Start {
         }
 
         Parser parser = new Parser(tokenList);
-        Expr expr = parser.parse();
+        List<Stmt> expr = parser.parse();
 
         PrintAST printer = new PrintAST();
-        System.out.println(printer.printAST(expr));
+//        System.out.println(printer.printAST(expr));
 
         Interpreter interpreter = new Interpreter();
         interpreter.interpreter(expr);

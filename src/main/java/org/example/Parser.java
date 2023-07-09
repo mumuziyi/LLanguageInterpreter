@@ -1,7 +1,11 @@
 package org.example;
 
 import org.example.expr.*;
+import org.example.stmt.Expression;
+import org.example.stmt.Print;
+import org.example.stmt.Stmt;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.example.Start.hadError;
@@ -16,13 +20,30 @@ public class Parser {
         this.tokens = tokens;
     }
 
-    public Expr parse(){
-        try {
-            return expression();
-        }catch (Exception e){
-            System.out.println(e);
-            return null;
+    public List<Stmt> parse(){
+        List<Stmt> statements = new LinkedList<>();
+        while (!isAtEnd()){
+            statements.add(statement());
         }
+
+        return statements;
+    }
+
+    private Stmt statement(){
+        if (match(PRINT)) return printStatement();
+
+        return expressionStatement();
+    }
+
+    private Stmt printStatement(){
+        Expr expr = expression();
+        consume(SEMICOLON, "Expect ';' after a value");
+        return new Print(expr);
+    }
+    private Stmt expressionStatement(){
+        Expr expr = expression();
+        consume(SEMICOLON, "Expect ';' after expression");
+        return new Expression(expr);
     }
 
     private Expr expression(){
