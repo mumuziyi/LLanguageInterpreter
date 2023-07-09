@@ -84,6 +84,9 @@ public class Start {
         PrintAST printer = new PrintAST();
         System.out.println(printer.printAST(expr));
 
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpreter(expr);
+
     }
 
 }
