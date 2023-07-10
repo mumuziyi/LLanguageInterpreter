@@ -1,10 +1,7 @@
 package org.example;
 
 import org.example.expr.*;
-import org.example.stmt.Expression;
-import org.example.stmt.Print;
-import org.example.stmt.Stmt;
-import org.example.stmt.Var;
+import org.example.stmt.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -47,8 +44,23 @@ public class Parser {
     }
     private Stmt statement(){
         if (match(PRINT)) return printStatement();
+        if (match(LEFT_BRACE)) return blockStatement();
 
         return expressionStatement();
+    }
+
+    private Stmt blockStatement(){
+        return new Block(block());
+    }
+
+    private List<Stmt> block(){
+        List<Stmt> blockStmts = new LinkedList<>();
+        while (!match(RIGHT_BRACE) && !isAtEnd()){
+            blockStmts.add(declaration());
+        }
+        current -= 1;
+        consume(RIGHT_BRACE,"Expect '}' at the end of the block");
+        return blockStmts;
     }
 
     private Stmt printStatement(){

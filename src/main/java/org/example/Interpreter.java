@@ -1,10 +1,7 @@
 package org.example;
 
 import org.example.expr.*;
-import org.example.stmt.Expression;
-import org.example.stmt.Print;
-import org.example.stmt.Stmt;
-import org.example.stmt.Var;
+import org.example.stmt.*;
 
 import java.util.List;
 
@@ -37,6 +34,29 @@ public class Interpreter {
         if (statement instanceof Var){
             executeVar(statement);
         }
+
+        if (statement instanceof Block){
+            executeBlock(statement, new Environment(environment));
+        }
+    }
+
+    private void executeBlock(Stmt statement, Environment environment){
+        Block block = (Block) statement;
+        List<Stmt> blockStmts = block.stmts;
+
+        Environment previous = this.environment;
+
+        try {
+            this.environment = environment;
+            for (Stmt stmt : blockStmts){
+                execute(stmt);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }finally {
+            this.environment = previous;
+        }
+
     }
 
     private void executeVar(Stmt statement){
@@ -77,7 +97,7 @@ public class Interpreter {
     private Object evaluateAssign(Expr expr){
         Assign assign = (Assign) expr;
         Object value = evaluate(assign.value);
-        environment.addVar(assign.name.lexeme,value);
+        environment.assignVar(assign.name.lexeme,value);
         return value;
     }
 

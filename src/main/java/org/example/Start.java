@@ -82,7 +82,7 @@ public class Start {
         Parser parser = new Parser(tokenList);
         List<Stmt> expr = parser.parse();
 
-        PrintAST printer = new PrintAST();
+//        PrintAST printer = new PrintAST();
 //        System.out.println(printer.printAST(expr));
 
         Interpreter interpreter = new Interpreter();

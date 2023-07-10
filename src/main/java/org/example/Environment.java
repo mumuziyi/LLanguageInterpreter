@@ -5,6 +5,16 @@ import java.util.Map;
 
 public class Environment {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
+
+    Environment enclosing;
+
+    Environment(){
+        enclosing = null;
+    }
+
+    Environment(Environment enclosing){
+        this.enclosing = enclosing;
+    }
     private final Map<String, Object> values = new HashMap<>();
 
 
@@ -12,9 +22,24 @@ public class Environment {
         values.put(name, value);
     }
 
+    void assignVar(String name, Object value){
+        if (values.containsKey(name)){
+            values.put(name,value);
+            return;
+        }
+        if (enclosing != null){
+            enclosing.assignVar(name,value);
+            return;
+        }
+        handler.outputErrorInfo("Can't assign a value to an undefined variable",-1);
+    }
+
     Object getValue(Token name){
         if (values.containsKey(name.lexeme)){
             return values.get(name.lexeme);
+        }
+        if (enclosing != null){
+            return enclosing.getValue(name);
         }
         handler.outputErrorInfo("Undefined variables",name.line);
         return null;

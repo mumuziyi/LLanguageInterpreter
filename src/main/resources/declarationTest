@@ -1,9 +1,19 @@
-print x = 10;
-
-var x = 1;
-var y = 1;
-print x + y;
-
-var z = 1;
-z = 5;
-print z;
+var a = "global a";
+var b = "global b";
+var c = "global c";
+{
+  var a = "outer a";
+  var b = "outer b";
+  {
+    var a = "inner a";
+    print a;
+    print b;
+    print c;
+  }
+  print a;
+  print b;
+  print c;
+}
+print a;
+print b;
+print c;
