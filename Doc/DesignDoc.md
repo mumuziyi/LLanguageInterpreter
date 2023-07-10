@@ -93,4 +93,6 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
 3. Update precedence: add whileStmt
 4. Update Precedence: add forStmt.
    - transfer to while Loop instead impl a new class.
+   - for(var a = 1; a < 10; a = a + 1)
+   - Block{ var a = 1; while(a < 10)Block{ Block{for body}, Block{a = a + 1} } }
 

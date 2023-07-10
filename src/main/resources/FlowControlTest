@@ -1,6 +1,6 @@
-// IF-ElSE test
+print "-----IF-ELSE-----";
 var a = 1;
-a = 2;
+print "a is " + a;
 if( a == 1){
 print "a equals 1";
 }else{
@@ -8,14 +8,13 @@ print "a not equals 1";
 }
 
 a = 2;
-print a;
+print "a is " + a;
 if(a == 1){
 print "a equals 1";
 }else{
 print "a equals to " + a;
 }
-print "----------";
-
+print "-----LOGIC_AND / LOGIC_OR-----";
 var v1 = 5;
 var v2 = 6;
 var s1 = "Hello";
@@ -23,5 +22,26 @@ var s2 = "Hello";
 
 print ( v1 == v2) and (s1 == s2);
 print ( v1 == v2) or (s1 == s2);
+
+print "-----WHILE-----";
+// WHILE test
+var count = 5;
+while(count > 0){
+print "While count: " + count;
+count = count - 1;
+}
+
+print "------FOR-----";
+
+// FOR test
+for(var forCount = 5; forCount > 0; forCount = forCount - 1){
+print "For count: " + forCount;
+}
+
+for(var i = 0; i < 3; i = i + 1){
+    for(var j = 0; j < 3; j = j + 1){
+        print i + " " + j;
+    }
+}
 
 

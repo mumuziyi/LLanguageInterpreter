@@ -42,6 +42,17 @@ public class Interpreter {
         if (statement instanceof If){
             executeIf(statement);
         }
+
+        if (statement instanceof While){
+            executeWhile(statement);
+        }
+    }
+
+    private void executeWhile(Stmt statement){
+        While whileStmt = (While) statement;
+        while (isTruthy(evaluate(whileStmt.condition))){
+            execute(whileStmt.body);
+        }
     }
 
     private void executeIf(Stmt statement){
@@ -175,7 +186,7 @@ public class Interpreter {
                 if (left instanceof String && right instanceof String){
                     return (String)left + (String) right;
                 }
-                return left.toString() + right.toString();
+                return stringfy(left) + stringfy(right);
 //                handler.outputErrorInfo("Number can't plus with string", binary.operator.line);
 //                break;
             case STAR:

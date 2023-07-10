@@ -3,6 +3,7 @@ package org.example;
 import org.example.expr.*;
 import org.example.stmt.*;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,10 +47,63 @@ public class Parser {
         if (match(PRINT)) return printStatement();
         if (match(LEFT_BRACE)) return blockStatement();
         if (match(IF)) return ifStatement();
+        if (match(WHILE)) return whileStatement();
+        if (match(FOR)) return forStatement();
 
         return expressionStatement();
     }
 
+    private Stmt forStatement(){
+        consume(LEFT_PAREN, "Expect '(' after 'for'");
+
+        Stmt initializer;
+        if (match(SEMICOLON)){
+            initializer = null;
+        }else if (match(VAR)){
+            initializer = varDeclaration();
+        }else {
+            initializer = expressionStatement();
+        }
+
+        Expr condition = null;
+        if (!check(SEMICOLON)){
+            condition = expression();
+        }
+        consume(SEMICOLON, "Expect ';' after loop condition");
+
+        Expr increment = null;
+        if (!check(SEMICOLON)){
+            increment = expression();
+        }
+        consume(RIGHT_PAREN, "Expect ')' after loop increment");
+
+        Stmt body = statement();
+
+        if (increment != null){
+            body = new Block(Arrays.asList(body,new Expression(increment)));
+        }
+
+        if (condition == null){
+            condition = new Literal(true);
+        }
+
+        body = new While(condition,body);
+
+        if (initializer != null){
+            body = new Block(Arrays.asList(initializer,body));
+        }
+
+        return body;
+    }
+
+    private Stmt whileStatement(){
+        consume(LEFT_PAREN, "Expected '(' after the 'while'");
+        Expr condition = expression();
+        consume(RIGHT_PAREN, "Expected '(' after the while-condition");
+
+        Stmt body = statement();
+        return new While(condition,body);
+    }
     private Stmt ifStatement(){
         consume(LEFT_PAREN, "Expect '(' after 'if' ");
         Expr condition = expression();
