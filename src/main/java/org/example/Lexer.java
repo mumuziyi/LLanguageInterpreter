@@ -109,13 +109,17 @@ public class Lexer {
     }
 
     private void identifier(){
-        while (isChar(peek())){
+        while (isCharOrDigit(peek())){
             current ++;
         }
         String text = code.substring(start,current);
         TokenType type = keywords.get(text);
         if (type == null) type = IDENTIFIER;
         addToken(type);
+    }
+
+    private boolean isCharOrDigit(char c){
+        return isChar(c) || isDigit(c);
     }
 
     private void string(){

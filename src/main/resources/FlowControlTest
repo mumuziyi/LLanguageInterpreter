@@ -1,0 +1,27 @@
+// IF-ElSE test
+var a = 1;
+a = 2;
+if( a == 1){
+print "a equals 1";
+}else{
+print "a not equals 1";
+}
+
+a = 2;
+print a;
+if(a == 1){
+print "a equals 1";
+}else{
+print "a equals to " + a;
+}
+print "----------";
+
+var v1 = 5;
+var v2 = 6;
+var s1 = "Hello";
+var s2 = "Hello";
+
+print ( v1 == v2) and (s1 == s2);
+print ( v1 == v2) or (s1 == s2);
+
+

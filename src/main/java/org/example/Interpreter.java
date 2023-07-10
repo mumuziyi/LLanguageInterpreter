@@ -38,6 +38,19 @@ public class Interpreter {
         if (statement instanceof Block){
             executeBlock(statement, new Environment(environment));
         }
+
+        if (statement instanceof If){
+            executeIf(statement);
+        }
+    }
+
+    private void executeIf(Stmt statement){
+        If ifStmt = (If) statement;
+        if (isTruthy(evaluate(ifStmt.condition))){
+            execute(ifStmt.thenBranch);
+        }else {
+            execute(ifStmt.elseBranch);
+        }
     }
 
     private void executeBlock(Stmt statement, Environment environment){
@@ -91,7 +104,24 @@ public class Interpreter {
         if (expr instanceof Grouping)return evaluateGrouping(expr);
         if (expr instanceof Variable)return evaluateVariable(expr);
         if (expr instanceof Assign) return evaluateAssign(expr);
+        if (expr instanceof Logical) return evaluateLogical(expr);
         return null;
+    }
+
+    private Object evaluateLogical(Expr expr){
+        Logical logical = (Logical) expr;
+        Object left = evaluate(logical.left);
+        Object right = evaluate(logical.right);
+
+        if (logical.operator.type == TokenType.OR){
+            if (isTruthy(left) || isTruthy(right)){
+                return true;
+            }else return false;
+        }else {
+            if (isTruthy(left) && isTruthy(right)){
+                return true;
+            }else return false;
+        }
     }
 
     private Object evaluateAssign(Expr expr){
@@ -145,8 +175,9 @@ public class Interpreter {
                 if (left instanceof String && right instanceof String){
                     return (String)left + (String) right;
                 }
-                handler.outputErrorInfo("Number can't plus with string", binary.operator.line);
-                break;
+                return left.toString() + right.toString();
+//                handler.outputErrorInfo("Number can't plus with string", binary.operator.line);
+//                break;
             case STAR:
                 checkNumberOperand(binary.operator,left,right);
                 return (double)left * (double) right;
