@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Uitils.ReturnValue;
 import org.example.expr.*;
 import org.example.stmt.*;
 
@@ -27,39 +28,41 @@ public class Interpreter {
                 execute(statement);
             }
         }catch (Exception e){
-            System.out.println("Interpreter Error: " + e);
+            if (!(e instanceof ReturnValue)){
+                System.out.println("Interpreter Error: " + e);
+            }
+            throw (ReturnValue) e;
+
         }
     }
 
     // Check the type of the statement and execute it.
     private void execute(Stmt statement){
-        if (statement instanceof Print){
-            executePrint(statement);
+        if (statement instanceof Print) executePrint(statement);
+
+        if (statement instanceof Expression) executeExpression(statement);
+
+        if (statement instanceof Var) executeVar(statement);
+
+        if (statement instanceof Block) executeBlock(statement, new Environment(environment));
+
+        if (statement instanceof If) executeIf(statement);
+
+        if (statement instanceof While) executeWhile(statement);
+
+        if (statement instanceof FunDecl) executeFunDecl(statement);
+
+        if (statement instanceof Return) executeReturn(statement);
+    }
+
+    private void executeReturn(Stmt statement){
+        Return returnStmt = (Return) statement;
+        Object value = null;
+        if (returnStmt.value != null){
+            value = evaluate(returnStmt.value);
+            throw new ReturnValue(value);
         }
 
-        if (statement instanceof Expression){
-            executeExpression(statement);
-        }
-
-        if (statement instanceof Var){
-            executeVar(statement);
-        }
-
-        if (statement instanceof Block){
-            executeBlock(statement, new Environment(environment));
-        }
-
-        if (statement instanceof If){
-            executeIf(statement);
-        }
-
-        if (statement instanceof While){
-            executeWhile(statement);
-        }
-
-        if (statement instanceof FunDecl){
-            executeFunDecl(statement);
-        }
     }
 
     private void executeFunDecl(Stmt stmt){
@@ -152,7 +155,11 @@ public class Interpreter {
         }
 
         FunctionExecution execution = new FunctionExecution(function.name.lexeme,arguments,funEnv);
-        execution.call();
+        try {
+            execution.call();
+        }catch (ReturnValue returnValue){
+            return returnValue.value;
+        }
         return null;
 
     }

@@ -3,7 +3,7 @@ Statement / Expression precedence:
 > 
 > declaration   → varDecl | statement | funDecl
 > 
-> statement      → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt; 
+> statement      → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt | returnStmt; 
 > 
 > exprStmt       → expression ";" ;
 > 
@@ -16,6 +16,8 @@ Statement / Expression precedence:
 > forStmt  → "for" "(" ( varDecl | exprStmt | ";" ) expression? ";"expression? ")" statement ;
 > 
 > funDecl → "fun" identifier "(" parameters? ")" block;
+> 
+> returnStmt → "return" expression? ";"
 
 
 > block → "{" declaration* "}";

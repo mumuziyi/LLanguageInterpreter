@@ -1,8 +1,13 @@
 // Declare first.
+fun add(a,b,c){
+    print a + b + c;
+}
+
+add(1,2,3);
 
 fun test1(hello, world){
-    for(var a = 10; a >= 0; a = a -1 ){
-        if(a > 5){print hello;}
+    for(var a = 6; a >= 0; a = a -1 ){
+        if(a > 3){print hello;}
         else{print world;}
     }
 }
@@ -36,6 +41,24 @@ fun recT(n){
 }
 
 recT(5);
+
+print "-----------Return Test--------------";
+fun returnTest(a,b,c){
+    return a + b + c;
+}
+
+print returnTest(1,2,3);
+
+print "---------Fib Test-------------";
+fun fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 2) + fib(n - 1);
+}
+
+for (var i = 0; i < 20; i = i + 1) {
+  print fib(i);
+}
+
 
 
 

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Uitils.ReturnValue;
 import org.example.stmt.Stmt;
 
 import java.util.List;
@@ -33,10 +34,8 @@ public class FunctionExecution {
         for (int i = 0; i < parameter.size(); i++){
             environment.addVar(parameter.get(i).lexeme,arguments.get(i));
         }
-
         Interpreter interpreter = new Interpreter(environment,funEnv);
         interpreter.interpreter(body);
-
         return null;
     }
 

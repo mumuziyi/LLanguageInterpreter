@@ -72,8 +72,19 @@ public class Parser {
         if (match(IF)) return ifStatement();
         if (match(WHILE)) return whileStatement();
         if (match(FOR)) return forStatement();
+        if (match(RETURN)) return returnStatement();
 
         return expressionStatement();
+    }
+
+    private Stmt returnStatement(){
+        Token keyword = tokens.get(current - 1);
+        Expr value = null;
+        if (tokens.get(current).type != SEMICOLON){
+            value = expression();
+        }
+        consume(SEMICOLON,"Expect a ';' after the return value.");
+        return new Return(keyword,value);
     }
 
     private Stmt forStatement(){
