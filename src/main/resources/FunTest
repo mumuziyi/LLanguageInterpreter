@@ -1,4 +1,42 @@
+// Declare first.
+
 fun test1(hello, world){
-print hello;
-print world;
+    for(var a = 10; a >= 0; a = a -1 ){
+        if(a > 5){print hello;}
+        else{print world;}
+    }
 }
+
+fun test3(){
+    print "Test3";
+    print "-------";
+    fun test4(){
+        print "Test 4";
+    }
+    test4();
+}
+
+fun test2(){
+    test3();
+    print("----------");
+}
+
+var hello = "Outer";
+test2();
+test1( "hello", "world");
+print hello;
+
+
+print "----------recursive Test------------";
+fun recT(n){
+    if(n > 1){
+        recT(n - 1);
+    }
+    print n;
+}
+
+recT(5);
+
+
+
+

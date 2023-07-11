@@ -41,7 +41,19 @@ public class Environment {
         if (enclosing != null){
             return enclosing.getValue(name);
         }
-        handler.outputErrorInfo("Undefined variables",name.line);
+
+//        handler.outputErrorInfo("Undefined variables",name.line);
+        return null;
+    }
+
+    Object getFunction(String name){
+        if (values.containsKey(name)){
+            return values.get(name);
+        }
+        if (enclosing != null){
+            return enclosing.getFunction(name);
+        }
+        handler.outputErrorInfo("Undefined variables",-1);
         return null;
     }
 

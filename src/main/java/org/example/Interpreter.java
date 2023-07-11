@@ -12,6 +12,13 @@ public class Interpreter {
 
     Environment funEnv = new Environment();
 
+    Interpreter(Environment environment, Environment funEnv){
+        this.environment = environment;
+        this.funEnv = funEnv;
+    }
+
+    Interpreter(){}
+
 
     // Get a list of statements from Parser, execute every statement one by one
     public void interpreter(List<Stmt> statements){
@@ -58,7 +65,6 @@ public class Interpreter {
     private void executeFunDecl(Stmt stmt){
         FunDecl funDecl = (FunDecl) stmt;
         funEnv.addVar(funDecl.name.lexeme,funDecl.function);
-
     }
     private void executeWhile(Stmt statement){
         While whileStmt = (While) statement;
@@ -137,14 +143,17 @@ public class Interpreter {
 
         Object callee = evaluate(call.callee);
 
+        Function function = (Function) callee;
+
         List<Object> arguments = new ArrayList<>();
 
         for (Expr argument : call.arguments){
             arguments.add(evaluate(argument));
         }
 
-        FunctionExecution execution = new FunctionExecution();
-        return execution.call(arguments);
+        FunctionExecution execution = new FunctionExecution(function.name.lexeme,arguments,funEnv);
+        execution.call();
+        return null;
 
     }
 
@@ -173,7 +182,14 @@ public class Interpreter {
 
     private Object evaluateVariable(Expr expr){
         Variable variable = (Variable) expr;
-        return environment.getValue(variable.name);
+        if (environment.getValue(variable.name) != null){
+            return environment.getValue(variable.name);
+        }
+        if (funEnv.getValue(variable.name) != null){
+            return funEnv.getValue(variable.name);
+        }
+        handler.outputErrorInfo("Undefined variables",variable.name.line);
+        return null;
     }
     private Object evaluateGrouping(Expr expr){
         Grouping grouping = (Grouping) expr;
