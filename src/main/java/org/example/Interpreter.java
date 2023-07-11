@@ -3,6 +3,7 @@ package org.example;
 import org.example.expr.*;
 import org.example.stmt.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Interpreter {
@@ -116,7 +117,24 @@ public class Interpreter {
         if (expr instanceof Variable)return evaluateVariable(expr);
         if (expr instanceof Assign) return evaluateAssign(expr);
         if (expr instanceof Logical) return evaluateLogical(expr);
+        if (expr instanceof Call) return evaluateCall(expr);
         return null;
+    }
+
+    private Object evaluateCall(Expr expr){
+        Call call = (Call) expr;
+
+        Object callee = evaluate(call.callee);
+
+        List<Object> arguments = new ArrayList<>();
+
+        for (Expr argument : call.arguments){
+            arguments.add(evaluate(argument));
+        }
+
+        FunctionExecution execution = new FunctionExecution();
+        return execution.call(arguments);
+
     }
 
     private Object evaluateLogical(Expr expr){

@@ -28,7 +28,11 @@ Statement / Expression precedence:
 > 
 >factor         → unary ( ( "/" | "*" ) unary )* ;
 > 
->unary          → ( "!" | "-" ) unary | primary ;
+>unary          → ( "!" | "-" ) unary | call ;
+> 
+> call          → primary ( "(" arguments? ")" )* ;
+> 
+> arguments     → expression ( "," expression )* ;
 > 
 >primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
 
@@ -95,4 +99,7 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
    - transfer to while Loop instead impl a new class.
    - for(var a = 1; a < 10; a = a + 1)
    - Block{ var a = 1; while(a < 10)Block{ Block{for body}, Block{a = a + 1} } }
+
+# 7. Function
+1. 
 

@@ -3,6 +3,7 @@ package org.example;
 import org.example.expr.*;
 import org.example.stmt.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -235,7 +236,31 @@ public class Parser {
             Expr right = unary();
             return new Unary(operator,right);
         }
-        return primary();
+        return call();
+    }
+
+    // if find (, start evaluate the arguments. it can allow fun()();
+    private Expr call(){
+        Expr expr = primary();
+
+        while (true){
+            if (match(LEFT_PAREN)){
+                expr = finishCall(expr);
+            }else break;
+        }
+        return expr;
+    }
+
+    private Expr finishCall(Expr callee){
+        List<Expr> arguments = new ArrayList<>();
+        if (!check(RIGHT_PAREN)){
+            do {
+                arguments.add(expression());
+            }while (match(COMMA));
+        }
+        Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments ");
+
+        return new Call(callee,paren,arguments);
     }
 
     private Expr primary(){
