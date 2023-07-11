@@ -1,6 +1,8 @@
 Statement / Expression precedence:
 > program        → statement* EOF ; 
 > 
+> declaration   → varDecl | statement | funDecl
+> 
 > statement      → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt; 
 > 
 > exprStmt       → expression ";" ;
@@ -12,6 +14,8 @@ Statement / Expression precedence:
 > whileStmt    → "while" "(" expression ")" statement ;
 > 
 > forStmt  → "for" "(" ( varDecl | exprStmt | ";" ) expression? ";"expression? ")" statement ;
+> 
+> funDecl → "fun" identifier "(" parameters? ")" block;
 
 
 > block → "{" declaration* "}";

@@ -50,7 +50,7 @@ public class Start {
 
     // Get code form the file
     public static void runFromFile(){
-        String filePath = "src/main/resources/FlowControlTest"; // 替换为实际文件的路径
+        String filePath = "src/main/resources/FunTest"; // 替换为实际文件的路径
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

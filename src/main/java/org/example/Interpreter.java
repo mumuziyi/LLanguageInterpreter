@@ -10,6 +10,8 @@ public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
     Environment environment = new Environment();
 
+    Environment funEnv = new Environment();
+
 
     // Get a list of statements from Parser, execute every statement one by one
     public void interpreter(List<Stmt> statements){
@@ -47,8 +49,17 @@ public class Interpreter {
         if (statement instanceof While){
             executeWhile(statement);
         }
+
+        if (statement instanceof FunDecl){
+            executeFunDecl(statement);
+        }
     }
 
+    private void executeFunDecl(Stmt stmt){
+        FunDecl funDecl = (FunDecl) stmt;
+        funEnv.addVar(funDecl.name.lexeme,funDecl.function);
+
+    }
     private void executeWhile(Stmt statement){
         While whileStmt = (While) statement;
         while (isTruthy(evaluate(whileStmt.condition))){

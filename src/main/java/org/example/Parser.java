@@ -31,11 +31,33 @@ public class Parser {
 
     private Stmt declaration(){
         if (match(VAR)) return varDeclaration();
+        if (match(FUN)) return funDeclaration();
         else return statement();
     }
 
+    private Stmt funDeclaration(){
+        Token name = consume(IDENTIFIER,"Expect identifier after function declaration");
+
+        // Start scan the parameters
+        consume(LEFT_PAREN, "Expect '(' after function identifier");
+        List<Token> parameters = new ArrayList<>();
+        while (!check(RIGHT_PAREN)){
+            do {
+                parameters.add(consume(IDENTIFIER,"Expect parameter name"));
+            }while (match(COMMA));
+        }
+        consume(RIGHT_PAREN, "Expect ')' at the end of the function declaration");
+
+        // Start scan the body
+        consume(LEFT_BRACE,"Expect '{' before the function body.");
+
+        List<Stmt> body = block();
+
+        return new FunDecl(name,new Function(name,parameters,body));
+    }
+
     private Stmt varDeclaration(){
-        Token name = consume(IDENTIFIER, " Expected");
+        Token name = consume(IDENTIFIER, " Expected identifier after var declaration");
 
         Expr initializer = null;
         if (match(EQUAL)){
