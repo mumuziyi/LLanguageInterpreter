@@ -50,7 +50,8 @@ public class Start {
 
     // Get code form the file
     public static void runFromFile(){
-        String filePath = "src/main/resources/FunTest"; // 替换为实际文件的路径
+//        String filePath = "src/main/resources/FunTest";
+        String filePath = "src/main/resources/DataStructureTest";
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -74,10 +75,6 @@ public class Start {
     }
 
     public static void run(){
-//
-//        for (int i = 0; i < tokenList.size(); i++){
-//            System.out.println(tokenList.get(i).toString());
-//        }
 
         Parser parser = new Parser(tokenList);
         List<Stmt> expr = parser.parse();

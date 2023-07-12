@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Structure.ListStructure;
 import org.example.expr.*;
 import org.example.stmt.*;
 
@@ -8,7 +9,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.example.Start.hadError;
 import static org.example.TokenType.*;
 
 public class Parser {
@@ -31,9 +31,51 @@ public class Parser {
 
     private Stmt declaration(){
         if (match(VAR)) return varDeclaration();
+        if (match(LIST)) return listDeclaration();
         if (match(FUN)) return funDeclaration();
         else return statement();
     }
+
+    //list(number) list;
+    private Stmt listDeclaration(){
+
+        ListStructure value = parseList();
+
+        Token name = consume(IDENTIFIER, "Expect identifier after function declaration");
+        consume(SEMICOLON,"Expect ';' after declare the List");
+        return new ListStmt(name,value);
+    }
+
+    // list( list(number) )
+    private ListStructure parseList(){
+        consume(LEFT_PAREN, "Expect '(' after ListDecl");
+        TokenType type = null;
+        Object body = null;
+        ListStructure innerList = null;
+
+        if (!check(RIGHT_PAREN)) {
+            if (match(NUMBER)){
+                type = NUMBER;
+                body = new ArrayList<Double>();
+            }else if (match(STRING)){
+                type = STRING;
+                body = new ArrayList<String>();
+            }else if (match(BOOLEAN)){
+                type = BOOLEAN;
+                body = new ArrayList<Boolean>();
+            }else if (match(LIST)){
+                type = LIST;
+                innerList = parseList();
+                body = new ArrayList<ListStructure>();
+            }else {
+                handler.outputErrorInfo("Unknown token type in type decl", tokens.get(current).line);
+            }
+        }
+        consume(RIGHT_PAREN, "Expect ')' after type decl");
+
+        return new ListStructure(type,body,innerList);
+    }
+
 
     private Stmt funDeclaration(){
         Token name = consume(IDENTIFIER,"Expect identifier after function declaration");

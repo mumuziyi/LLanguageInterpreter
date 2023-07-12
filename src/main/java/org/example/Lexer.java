@@ -36,6 +36,7 @@ public class Lexer {
         keywords.put("while",  WHILE);
         keywords.put("number",  NUMBER);
         keywords.put("string",  STRING);
+        keywords.put("list", LIST);
     }
 
     List<Token> tokenList = new LinkedList<>();

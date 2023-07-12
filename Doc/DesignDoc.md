@@ -1,7 +1,7 @@
 Statement / Expression precedence:
 > program        → statement* EOF ; 
 > 
-> declaration   → varDecl | statement | funDecl
+> declaration   → varDecl | statement | funDecl | ListDecl
 > 
 > statement      → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt | returnStmt; 
 > 
@@ -18,6 +18,8 @@ Statement / Expression precedence:
 > funDecl → "fun" identifier "(" parameters? ")" block;
 > 
 > returnStmt → "return" expression? ";"
+> 
+> ListDecl -> "list" ( TokenType? ) ";"
 
 
 > block → "{" declaration* "}";

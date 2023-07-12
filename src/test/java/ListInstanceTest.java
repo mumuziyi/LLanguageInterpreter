@@ -9,6 +9,8 @@ public class ListInstanceTest {
         List<Double> list2 = new ArrayList();
         Object listObject = list2;
 
+        list2.size();
+
         System.out.println(listObject instanceof List);
     }
 

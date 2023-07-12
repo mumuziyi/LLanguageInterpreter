@@ -1,0 +1,2 @@
+list(number) list1;
+list(list(number)) list2;

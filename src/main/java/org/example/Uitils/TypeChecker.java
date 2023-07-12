@@ -15,6 +15,7 @@ public class TypeChecker {
         this.funEnv = funEnv;
     }
 
+
     public TokenType identifierCheck(String name){
         TokenType result;
         int count = 0;

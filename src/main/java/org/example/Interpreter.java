@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.Uitils.ReturnValue;
+import org.example.Uitils.TypeChecker;
 import org.example.expr.*;
 import org.example.stmt.*;
 
@@ -53,6 +54,13 @@ public class Interpreter {
         if (statement instanceof FunDecl) executeFunDecl(statement);
 
         if (statement instanceof Return) executeReturn(statement);
+
+        if (statement instanceof ListStmt) executeList(statement);
+    }
+
+    private void executeList(Stmt statement){
+        ListStmt listStmt = (ListStmt) statement;
+        environment.addVar(listStmt.name.lexeme,listStmt.structure);
     }
 
     private void executeReturn(Stmt statement){
