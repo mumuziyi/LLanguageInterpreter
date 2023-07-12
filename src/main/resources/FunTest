@@ -1,9 +1,10 @@
 // Declare first.
 fun add(a,b,c){
-    print a + b + c;
+    print "add(1,2,3) = " + a + b + c;
 }
-
 add(1,2,3);
+
+print "-------";
 
 fun test1(hello, world){
     for(var a = 6; a >= 0; a = a -1 ){
@@ -11,6 +12,7 @@ fun test1(hello, world){
         else{print world;}
     }
 }
+
 
 fun test3(){
     print "Test3";

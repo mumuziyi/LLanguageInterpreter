@@ -13,12 +13,12 @@ public class Interpreter {
 
     Environment funEnv = new Environment();
 
-    Interpreter(Environment environment, Environment funEnv){
+    public Interpreter(Environment environment, Environment funEnv){
         this.environment = environment;
         this.funEnv = funEnv;
     }
 
-    Interpreter(){}
+    public Interpreter(){}
 
 
     // Get a list of statements from Parser, execute every statement one by one

@@ -34,7 +34,7 @@ public class Environment {
         handler.outputErrorInfo("Can't assign a value to an undefined variable",-1);
     }
 
-    Object getValue(Token name){
+    public Object getValue(Token name){
         if (values.containsKey(name.lexeme)){
             return values.get(name.lexeme);
         }
@@ -54,6 +54,16 @@ public class Environment {
             return enclosing.getFunction(name);
         }
         handler.outputErrorInfo("Undefined variables",-1);
+        return null;
+    }
+
+    public Object getValueStr(String name) {
+        if (values.containsKey(name)) {
+            return values.get(name);
+        }
+        if (enclosing != null) {
+            return enclosing.getValueStr(name);
+        }
         return null;
     }
 
