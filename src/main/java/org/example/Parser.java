@@ -53,6 +53,9 @@ public class Parser {
         Object body = null;
         ListStructure innerList = null;
 
+        /*
+        var a = 3;
+         */
         if (!check(RIGHT_PAREN)) {
             if (match(NUMBER)){
                 type = NUMBER;
@@ -75,6 +78,8 @@ public class Parser {
 
         return new ListStructure(type,body,innerList);
     }
+
+    //
 
 
     private Stmt funDeclaration(){
@@ -100,7 +105,6 @@ public class Parser {
 
     private Stmt varDeclaration(){
         Token name = consume(IDENTIFIER, " Expected identifier after var declaration");
-
         Expr initializer = null;
         if (match(EQUAL)){
             initializer = expression();

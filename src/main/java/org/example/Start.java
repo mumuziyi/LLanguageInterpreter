@@ -50,8 +50,11 @@ public class Start {
 
     // Get code form the file
     public static void runFromFile(){
-//        String filePath = "src/main/resources/FunTest";
-        String filePath = "src/main/resources/DataStructureTest";
+
+//        String filePath = "src/main/resources/declarationTest";
+//        String filePath = "src/main/resources/FlowControlTest";
+        String filePath = "src/main/resources/Temp";
+//        String filePath = "src/main/resources/DataStructureTest";
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
