@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Type {
 
-    private PrimitiveType pt =  null;
-    private List<Type> params  = new ArrayList<Type>();
-    enum PrimitiveType {
+    public PrimitiveType pt =  null;
+    public List<Type> params  = new ArrayList<Type>();
+    public enum PrimitiveType {
         UnitType,
         AnyType,
         StringType,
@@ -15,9 +15,10 @@ public class Type {
         NumberType,
         ListType,
         ProductType,
-        SumType
+        SumType,
+        NullType
     }
-    Type(PrimitiveType pt) {
+    public Type(PrimitiveType pt) {
        this.pt  = pt;
     }
 

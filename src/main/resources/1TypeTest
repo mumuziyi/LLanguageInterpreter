@@ -1,0 +1,3 @@
+var a:string = "Hello";
+var b:<string, (string,number)>;
+var c = 10;

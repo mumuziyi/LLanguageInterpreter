@@ -1,6 +1,7 @@
 package org.example.Uitils;
 
 import org.example.*;
+import org.example.type.Type;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TypeChecker {
         TokenType result;
         int count = 0;
         if (varEnv.getValueStr(name) != null){
-            result = ObjectCheck(varEnv.getValueStr(name));
+//            result = ObjectCheck(varEnv.getValueStr(name));
             count ++;
         }
 
@@ -36,17 +37,19 @@ public class TypeChecker {
         return TokenType.NIL;
     }
 
-    public static TokenType ObjectCheck(Object object){
+    public static Type.PrimitiveType ObjectCheck(Object object){
         if (object instanceof Integer || object instanceof Double || object instanceof Float){
-            return TokenType.NUMBER;
+            return Type.PrimitiveType.NumberType;
         }
         if (object instanceof Boolean){
-            return TokenType.BOOLEAN;
+            return Type.PrimitiveType.BoolType;
         }
         if (object instanceof String){
-            return TokenType.STRING;
+            return Type.PrimitiveType.StringType;
+        }if (object instanceof List){
+            return Type.PrimitiveType.ListType;
         }
-        return null;
+        return Type.PrimitiveType.NullType;
     }
 
     public static TokenType unaryCheck(Token operator, Object left){

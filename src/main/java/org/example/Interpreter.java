@@ -1,9 +1,11 @@
 package org.example;
 
+import org.example.Structure.ValueStructure;
 import org.example.Uitils.ReturnValue;
 import org.example.Uitils.TypeChecker;
 import org.example.expr.*;
 import org.example.stmt.*;
+import org.example.type.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,9 +119,17 @@ public class Interpreter {
         Object value = null;
         if (var.initializer != null){
             value = evaluate(var.initializer);
+            // Verify the type of the initializer.
+            if (var.type.pt != Type.PrimitiveType.NullType && TypeChecker.ObjectCheck(value) != var.type.pt){
+                handler.outputErrorInfo("Error: the type of the variable " + var.name.lexeme + " should be " +
+                        var.type.pt + " instead of " + TypeChecker.ObjectCheck(value), -1);
+            }
         }
 
-        environment.addVar(var.name.lexeme,value);
+
+        ValueStructure valueStructure = new ValueStructure(var.type,value);
+
+        environment.addVar(var.name.lexeme,valueStructure);
     }
 
     // For the printStmt, just output the value of the expression behind the print.

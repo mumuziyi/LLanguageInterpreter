@@ -1,8 +1,10 @@
 package org.example;
 
 import org.example.Structure.ListStructure;
+import org.example.Uitils.TypeChecker;
 import org.example.expr.*;
 import org.example.stmt.*;
+import org.example.type.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,15 +105,67 @@ public class Parser {
         return new FunDecl(name,new Function(name,parameters,body));
     }
 
+
     private Stmt varDeclaration(){
         Token name = consume(IDENTIFIER, " Expected identifier after var declaration");
+
+        Type type = null;
+        // whether user specify the type of the variable.
+        if (match(COLON)){
+            type = getType();
+        }else {
+            type = new Type(TypeChecker.ObjectCheck(getCurrent()));
+        }
+
         Expr initializer = null;
         if (match(EQUAL)){
             initializer = expression();
         }
         consume(SEMICOLON, "Expected ';' after variable declaration");
-        return new Var(name,initializer);
+        return new Var(name,initializer,type);
     }
+
+    // type list(a)  = <unit, (a, list(a))>
+    //var a : string;
+// var a  : <unit,(any, a)> = tuple(3, b);
+    // var a  : <number,string>  = 3 ; // or 'hello world'
+
+    private Type getType(){
+        if (match(STRING)){
+            return new Type(Type.PrimitiveType.StringType);
+        }
+        if (match(BOOLEAN)){
+            return new Type(Type.PrimitiveType.BoolType);
+        }
+        if (match(NUMBER)){
+            return new Type(Type.PrimitiveType.NumberType);
+        }
+        if (match(LESS)){
+            List<Type> params = new ArrayList<>();
+            while (!check(GREATER)){
+                do {
+                    params.add(getType());
+                }while (match(COMMA));
+            }
+            consume(GREATER,"Expect '>' after sumType decl");
+            return new Type(Type.PrimitiveType.SumType, params);
+        }
+
+        if (match(LEFT_PAREN)){
+            List<Type> params = new ArrayList<>();
+            while (!check(RIGHT_PAREN)){
+                do {
+                    params.add(getType());
+                }while (match(COMMA));
+            }
+            consume(RIGHT_PAREN,"Expect ')' after product type.");
+            return new Type(Type.PrimitiveType.ProductType,params);
+        }
+
+        handler.outputErrorInfo("Undefined types for variable.",tokens.get(current).line);
+        return null;
+    }
+
     private Stmt statement(){
         if (match(PRINT)) return printStatement();
         if (match(LEFT_BRACE)) return blockStatement();
@@ -394,6 +448,10 @@ public class Parser {
 
     private boolean isAtEnd(){
         return tokens.get(current).type == EOF;
+    }
+
+    private Token getCurrent(){
+        return tokens.get(current);
     }
 
 }

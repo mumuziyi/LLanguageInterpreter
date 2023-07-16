@@ -62,7 +62,7 @@ You can check in TokenType.java.
 > 
 > parameters -> IDENTIFIER ("," IDENTIFIER)*;
 >
-> varDecl       -> "var" IDENTIFIER ("=" expr )? ";";
+> varDecl       -> "var" IDENTIFIER (":" Type)?  ("=" expr )? ";";
 >
 > statement -> returnStmt | exprStmt | printStmt | block | ifStmt | whileStmt | forStmt;
 > 
