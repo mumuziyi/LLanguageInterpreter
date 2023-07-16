@@ -109,12 +109,10 @@ public class Parser {
     private Stmt varDeclaration(){
         Token name = consume(IDENTIFIER, " Expected identifier after var declaration");
 
-        Type type = null;
+        Type type = new Type(Type.PrimitiveType.NullType);
         // whether user specify the type of the variable.
         if (match(COLON)){
             type = getType();
-        }else {
-            type = new Type(TypeChecker.ObjectCheck(getCurrent()));
         }
 
         Expr initializer = null;
@@ -455,11 +453,9 @@ public class Parser {
 
         if (match(LEFT_PAREN)){
             List<Type> params = new ArrayList<>();
-            while (!check(RIGHT_PAREN)){
-                do {
-                    params.add(getType());
-                }while (match(COMMA));
-            }
+            params.add(getType());
+            consume(COMMA,"Expect ',' between two variables");
+            params.add(getType());
             consume(RIGHT_PAREN,"Expect ')' after product type.");
             return new Type(Type.PrimitiveType.ProductType,params);
         }

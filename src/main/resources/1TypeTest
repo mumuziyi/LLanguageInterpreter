@@ -1,5 +1,6 @@
-var test1 = tuple(2,1);
+var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
 var test2 = tuple(3,test1);
-var a:string = "Hello";
+var a:string = "hello";
+
 var b:<string, (string,number)>;
 var c = 10;

@@ -1,6 +1,7 @@
 package org.example.Uitils;
 
 import org.example.*;
+import org.example.Structure.TupleStructure;
 import org.example.type.Type;
 
 import java.util.List;
@@ -37,19 +38,23 @@ public class TypeChecker {
         return TokenType.NIL;
     }
 
-    public static Type.PrimitiveType ObjectCheck(Object object){
+    public static Type ObjectCheck(Object object){
         if (object instanceof Integer || object instanceof Double || object instanceof Float){
-            return Type.PrimitiveType.NumberType;
+            return new Type(Type.PrimitiveType.NumberType);
         }
         if (object instanceof Boolean){
-            return Type.PrimitiveType.BoolType;
+            return new Type(Type.PrimitiveType.BoolType);
         }
         if (object instanceof String){
-            return Type.PrimitiveType.StringType;
+            return new Type(Type.PrimitiveType.StringType);
         }if (object instanceof List){
-            return Type.PrimitiveType.ListType;
+            return new Type(Type.PrimitiveType.ListType);
         }
-        return Type.PrimitiveType.NullType;
+        if (object instanceof TupleStructure){
+            return new Type(Type.PrimitiveType.ProductType);
+        }
+
+        return new Type(Type.PrimitiveType.NullType);
     }
 
     public static TokenType unaryCheck(Token operator, Object left){

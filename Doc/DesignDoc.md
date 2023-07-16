@@ -109,5 +109,13 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
    - Block{ var a = 1; while(a < 10)Block{ Block{for body}, Block{a = a + 1} } }
 
 # 7. Function
-1. 
 
+# 8. Product type
+1. Type decl: var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
+   > Parse: Var( name:= test1, 
+   > initializer:= Tuple{ left:= literal(2), right:= Tuple{left:= "hello",right:= 4}}, 
+   > type:= { productType, 
+   > params:= < type:={Number, params = null}, type = {type:=product, Params:={String, numberType} } > })
+
+   > Interpreter: evaluate(initializer) ---> TupleStructure()
+> tuple{ primitiveType, tuple(Primitive, Primitive)} , Type{PrimitiveType, params:=List<Type>{ type}}

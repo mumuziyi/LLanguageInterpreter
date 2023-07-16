@@ -120,11 +120,10 @@ public class Interpreter {
         Object value = null;
         if (var.initializer != null){
             value = evaluate(var.initializer);
-//            // Verify the type of the initializer.
-//            if (var.type.pt != Type.PrimitiveType.NullType && TypeChecker.ObjectCheck(value) != var.type.pt){
-//                handler.outputErrorInfo("Error: the type of the variable " + var.name.lexeme + " should be " +
-//                        var.type.pt + " instead of " + TypeChecker.ObjectCheck(value), -1);
-//            }
+            Type required = var.type;
+            if (!isTypeEqual(required,value)){
+                handler.outputErrorInfo("Error: the type of the variable ", -1);
+            }
         }
 
 
@@ -132,6 +131,47 @@ public class Interpreter {
 
         environment.addVar(var.name.lexeme,valueStructure);
     }
+
+    private boolean isTypeEqual(Type required, Object given){
+        if (required.pt == Type.PrimitiveType.NullType){
+            return true;
+        }
+
+        if (given instanceof TupleStructure){
+            if (required.pt != Type.PrimitiveType.ProductType){
+                return false;
+            }
+            TupleStructure tuple = (TupleStructure) given;
+
+            Type givenLeft = TypeChecker.ObjectCheck(tuple.left);
+            Type requireL = required.params.get(0);
+
+            if (requireL.pt != givenLeft.pt){
+                return false;
+            }
+            if (requireL.pt == Type.PrimitiveType.ProductType){
+                if (!isTypeEqual(requireL,tuple.left)){
+                    return false;
+                }
+            }
+
+            Type givenRight = TypeChecker.ObjectCheck(tuple.right);
+            Type requireR = required.params.get(1);
+            if (requireR.pt != givenRight.pt){
+                return false;
+            }
+            if (requireR.pt == Type.PrimitiveType.ProductType){
+                if (!isTypeEqual(requireR,tuple.right)){
+                    return false;
+                }
+            }
+            return true;
+        }else return TypeChecker.ObjectCheck(given).pt == required.pt;
+    }
+
+
+
+
 
     // For the printStmt, just output the value of the expression behind the print.
     private void executePrint(Stmt statement){
@@ -210,6 +250,7 @@ public class Interpreter {
     private Object evaluateAssign(Expr expr){
         Assign assign = (Assign) expr;
         Object value = evaluate(assign.value);
+
         environment.assignVar(assign.name.lexeme,value);
         return value;
     }
