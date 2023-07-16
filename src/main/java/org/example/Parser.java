@@ -130,41 +130,6 @@ public class Parser {
 // var a  : <unit,(any, a)> = tuple(3, b);
     // var a  : <number,string>  = 3 ; // or 'hello world'
 
-    private Type getType(){
-        if (match(STRING)){
-            return new Type(Type.PrimitiveType.StringType);
-        }
-        if (match(BOOLEAN)){
-            return new Type(Type.PrimitiveType.BoolType);
-        }
-        if (match(NUMBER)){
-            return new Type(Type.PrimitiveType.NumberType);
-        }
-        if (match(LESS)){
-            List<Type> params = new ArrayList<>();
-            while (!check(GREATER)){
-                do {
-                    params.add(getType());
-                }while (match(COMMA));
-            }
-            consume(GREATER,"Expect '>' after sumType decl");
-            return new Type(Type.PrimitiveType.SumType, params);
-        }
-
-        if (match(LEFT_PAREN)){
-            List<Type> params = new ArrayList<>();
-            while (!check(RIGHT_PAREN)){
-                do {
-                    params.add(getType());
-                }while (match(COMMA));
-            }
-            consume(RIGHT_PAREN,"Expect ')' after product type.");
-            return new Type(Type.PrimitiveType.ProductType,params);
-        }
-
-        handler.outputErrorInfo("Undefined types for variable.",tokens.get(current).line);
-        return null;
-    }
 
     private Stmt statement(){
         if (match(PRINT)) return printStatement();
@@ -283,7 +248,7 @@ public class Parser {
     }
 
     private Expr assignment(){
-        Expr expr = or();
+        Expr expr = tuple();
 
         if (match(EQUAL)){
             Token equals = tokens.get(current - 1);
@@ -297,6 +262,20 @@ public class Parser {
             handler.outputErrorInfo("Invalid assignment target",equals.line);
         }
         return expr;
+    }
+
+    // var a = tuple(1, tuple(1,2))
+    private Expr tuple(){
+        if (match(TUPLE)){
+            consume(LEFT_PAREN,"Expect '(' after tuple");
+            Expr left = assignment();
+            consume(COMMA,"Expect ',' between two variables");
+            Expr right = assignment();
+            consume(RIGHT_PAREN,"Expect ')' at the end of tuple");
+            return new Tuple(left,right);
+        }
+
+        return or();
     }
 
     private Expr or(){
@@ -412,7 +391,6 @@ public class Parser {
         if (match(IDENTIFIER)){
             return new Variable(tokens.get(current - 1));
         }
-
         handler.outputErrorInfo("Unexpected token in primary()",tokens.get(current).line);
         return null;
     }
@@ -452,6 +430,42 @@ public class Parser {
 
     private Token getCurrent(){
         return tokens.get(current);
+    }
+
+    private Type getType(){
+        if (match(STRING)){
+            return new Type(Type.PrimitiveType.StringType);
+        }
+        if (match(BOOLEAN)){
+            return new Type(Type.PrimitiveType.BoolType);
+        }
+        if (match(NUMBER)){
+            return new Type(Type.PrimitiveType.NumberType);
+        }
+        if (match(LESS)){
+            List<Type> params = new ArrayList<>();
+            while (!check(GREATER)){
+                do {
+                    params.add(getType());
+                }while (match(COMMA));
+            }
+            consume(GREATER,"Expect '>' after sumType decl");
+            return new Type(Type.PrimitiveType.SumType, params);
+        }
+
+        if (match(LEFT_PAREN)){
+            List<Type> params = new ArrayList<>();
+            while (!check(RIGHT_PAREN)){
+                do {
+                    params.add(getType());
+                }while (match(COMMA));
+            }
+            consume(RIGHT_PAREN,"Expect ')' after product type.");
+            return new Type(Type.PrimitiveType.ProductType,params);
+        }
+
+        handler.outputErrorInfo("Undefined types for variable.",tokens.get(current).line);
+        return null;
     }
 
 }

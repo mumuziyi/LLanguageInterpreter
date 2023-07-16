@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Structure.TupleStructure;
 import org.example.Structure.ValueStructure;
 import org.example.Uitils.ReturnValue;
 import org.example.Uitils.TypeChecker;
@@ -119,11 +120,11 @@ public class Interpreter {
         Object value = null;
         if (var.initializer != null){
             value = evaluate(var.initializer);
-            // Verify the type of the initializer.
-            if (var.type.pt != Type.PrimitiveType.NullType && TypeChecker.ObjectCheck(value) != var.type.pt){
-                handler.outputErrorInfo("Error: the type of the variable " + var.name.lexeme + " should be " +
-                        var.type.pt + " instead of " + TypeChecker.ObjectCheck(value), -1);
-            }
+//            // Verify the type of the initializer.
+//            if (var.type.pt != Type.PrimitiveType.NullType && TypeChecker.ObjectCheck(value) != var.type.pt){
+//                handler.outputErrorInfo("Error: the type of the variable " + var.name.lexeme + " should be " +
+//                        var.type.pt + " instead of " + TypeChecker.ObjectCheck(value), -1);
+//            }
         }
 
 
@@ -156,7 +157,15 @@ public class Interpreter {
         if (expr instanceof Assign) return evaluateAssign(expr);
         if (expr instanceof Logical) return evaluateLogical(expr);
         if (expr instanceof Call) return evaluateCall(expr);
+        if (expr instanceof Tuple) return evaluateTuple(expr);
         return null;
+    }
+
+    private Object evaluateTuple(Expr expr){
+        Tuple tuple = (Tuple) expr;
+        Object left = evaluate(tuple.left);
+        Object right = evaluate(tuple.right);
+        return new TupleStructure(left,right);
     }
 
     private Object evaluateCall(Expr expr){

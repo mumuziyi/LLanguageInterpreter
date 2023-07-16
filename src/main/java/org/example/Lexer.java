@@ -37,6 +37,7 @@ public class Lexer {
         keywords.put("number",  NUMBER);
         keywords.put("string",  STRING);
         keywords.put("list", LIST);
+        keywords.put("tuple",TUPLE);
     }
 
     List<Token> tokenList = new LinkedList<>();
