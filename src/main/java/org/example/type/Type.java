@@ -44,6 +44,36 @@ public class Type {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Type other = (Type) obj;
+
+        // 检查 pt 是否相等
+        if (pt == null) {
+            if (other.pt != null) {
+                return false;
+            }
+        } else if (!pt.equals(other.pt)) {
+            return false;
+        }
+
+        // 检查 params 中的值是否相等
+        if (params == null) {
+            if (other.params != null) {
+                return false;
+            }
+        } else if (!params.equals(other.params)) {
+            return false;
+        }
+
+        return true;
+    }
 
 
 }

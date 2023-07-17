@@ -118,4 +118,6 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
    > params:= < type:={Number, params = null}, type = {type:=product, Params:={String, numberType} } > })
 
    > Interpreter: evaluate(initializer) ---> TupleStructure()
-> tuple{ primitiveType, tuple(Primitive, Primitive)} , Type{PrimitiveType, params:=List<Type>{ type}}
+> tuple{ primitiveType, tuple(Primitive, Primitive)} , Type{PrimitiveType, params:=List\<Type\>{ type}}
+> 
+> 

@@ -4,6 +4,7 @@ import org.example.*;
 import org.example.Structure.TupleStructure;
 import org.example.type.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypeChecker {
@@ -51,7 +52,13 @@ public class TypeChecker {
             return new Type(Type.PrimitiveType.ListType);
         }
         if (object instanceof TupleStructure){
-            return new Type(Type.PrimitiveType.ProductType);
+            TupleStructure tupleStructure = (TupleStructure) object;
+            List<Type> list = new ArrayList<>();
+            Object left = tupleStructure.left;
+            list.add(ObjectCheck(left));
+            Object right = tupleStructure.right;
+            list.add(ObjectCheck(right));
+            return new Type(Type.PrimitiveType.ProductType,list);
         }
 
         return new Type(Type.PrimitiveType.NullType);

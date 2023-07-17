@@ -121,16 +121,23 @@ public class Interpreter {
         if (var.initializer != null){
             value = evaluate(var.initializer);
             Type required = var.type;
-            if (!isTypeEqual(required,value)){
-                handler.outputErrorInfo("Error: the type of the variable ", -1);
+            Type given = TypeChecker.ObjectCheck(value);
+
+            if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
+                if (required.pt == Type.PrimitiveType.NullType){
+                    var.type = given;
+                }
+                ValueStructure valueStructure = new ValueStructure(var.type,value);
+                environment.addVar(var.name.lexeme,valueStructure);
+            }else {
+                handler.outputErrorInfo("The type of the variable isn't correct", -1);
             }
         }
 
 
-        ValueStructure valueStructure = new ValueStructure(var.type,value);
 
-        environment.addVar(var.name.lexeme,valueStructure);
     }
+
 
     private boolean isTypeEqual(Type required, Object given){
         if (required.pt == Type.PrimitiveType.NullType){
