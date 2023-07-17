@@ -1,3 +1,12 @@
+fun test1(hello, world){
+    for(var a = 6; a >= 0; a = a -1 ){
+        if(a > 3){print hello;}
+        else{print world;}
+    }
+}
+
+test1( "hello", "world");
+
 // Declare first.
 fun add(a,b,c){
     print "add(1,2,3) = " + a + b + c;
@@ -6,12 +15,7 @@ add(1,2,3);
 
 print "-------";
 
-fun test1(hello, world){
-    for(var a = 6; a >= 0; a = a -1 ){
-        if(a > 3){print hello;}
-        else{print world;}
-    }
-}
+
 
 fun test3(){
     print "Test3";
@@ -29,7 +33,9 @@ fun test2(){
 
 var hello = "Outer";
 test2();
-test1( "hello", "world");
+
+
+
 print hello;
 
 

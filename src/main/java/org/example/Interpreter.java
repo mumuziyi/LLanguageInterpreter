@@ -130,12 +130,11 @@ public class Interpreter {
                 ValueStructure valueStructure = new ValueStructure(var.type,value);
                 environment.addVar(var.name.lexeme,valueStructure);
             }else {
-                handler.outputErrorInfo("The type of the variable isn't correct", -1);
+                handler.outputErrorInfo("The type of '" + var.name.lexeme +"' isn't correct during decl", -1);
             }
+        }else {
+            environment.addVar(var.name.lexeme,new ValueStructure(var.type,value));
         }
-
-
-
     }
 
 
@@ -257,14 +256,15 @@ public class Interpreter {
     private Object evaluateAssign(Expr expr){
         Assign assign = (Assign) expr;
         Object value = evaluate(assign.value);
-
-        environment.assignVar(assign.name.lexeme,value);
+        Type type = TypeChecker.ObjectCheck(value);
+        environment.assignVar(assign.name.lexeme,new ValueStructure(type,value));
         return value;
     }
 
     private Object evaluateVariable(Expr expr){
         Variable variable = (Variable) expr;
         if (environment.getValue(variable.name) != null){
+
             return environment.getValue(variable.name);
         }
         if (funEnv.getValue(variable.name) != null){

@@ -1,6 +1,8 @@
 package org.example;
 
+import org.example.Structure.ValueStructure;
 import org.example.Uitils.ReturnValue;
+import org.example.Uitils.TypeChecker;
 import org.example.stmt.Stmt;
 
 import java.util.List;
@@ -32,7 +34,8 @@ public class FunctionExecution {
 
         // bind the para and arguments
         for (int i = 0; i < parameter.size(); i++){
-            environment.addVar(parameter.get(i).lexeme,arguments.get(i));
+            Object value = arguments.get(i);
+            environment.addVar(parameter.get(i).lexeme,new ValueStructure(TypeChecker.ObjectCheck(value),value));
         }
         Interpreter interpreter = new Interpreter(environment,funEnv);
         interpreter.interpreter(body);

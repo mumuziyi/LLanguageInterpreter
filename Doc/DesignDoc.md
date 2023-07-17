@@ -110,7 +110,7 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
 
 # 7. Function
 
-# 8. Product type
+# 8. Type system
 1. Type decl: var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
    > Parse: Var( name:= test1, 
    > initializer:= Tuple{ left:= literal(2), right:= Tuple{left:= "hello",right:= 4}}, 
@@ -118,6 +118,7 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
    > params:= < type:={Number, params = null}, type = {type:=product, Params:={String, numberType} } > })
 
    > Interpreter: evaluate(initializer) ---> TupleStructure()
-> tuple{ primitiveType, tuple(Primitive, Primitive)} , Type{PrimitiveType, params:=List\<Type\>{ type}}
-> 
-> 
+   > tuple{ primitiveType, tuple(Primitive, Primitive)} , Type{PrimitiveType, params:=List\<Type\>{ type}}
+2. If User specify the type: var a: string = "hello". add it to the env. and will report error if the 
+initializer isn't string: var:string = 1 (Error); 
+3. If didn't specify the type: NullType, and add the type after assign a value.

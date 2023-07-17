@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.Structure.TupleStructure;
+import org.example.Structure.ValueStructure;
+import org.example.type.Type;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +26,20 @@ public class Environment {
         values.put(name, value);
     }
 
-    void assignVar(String name, Object value){
+    void assignVar(String name, Object object){
         if (values.containsKey(name)){
-            values.put(name,value);
-            return;
+            ValueStructure given = (ValueStructure) object;
+            ValueStructure required = (ValueStructure) values.get(name);
+
+            // If user didn't specify the type
+            if (required.type.pt == Type.PrimitiveType.NullType ||given.type.equals(required.type)){
+                values.put(name,new ValueStructure(given.type,given.value));
+                return;
+            }
+            handler.outputErrorInfo("The type of assign to '"+ name +"' didn't match required type", -1);
         }
         if (enclosing != null){
-            enclosing.assignVar(name,value);
+            enclosing.assignVar(name,object);
             return;
         }
         handler.outputErrorInfo("Can't assign a value to an undefined variable",-1);
@@ -36,7 +47,15 @@ public class Environment {
 
     public Object getValue(Token name){
         if (values.containsKey(name.lexeme)){
-            return values.get(name.lexeme);
+            Object obj = values.get(name.lexeme);
+            // If it's varEnv;
+            if (obj instanceof ValueStructure){
+                ValueStructure valueStructure = (ValueStructure) values.get(name.lexeme);
+                return valueStructure.value;
+
+            }else {// If it's fun env
+                return values.get(name.lexeme);
+            }
         }
         if (enclosing != null){
             return enclosing.getValue(name);
