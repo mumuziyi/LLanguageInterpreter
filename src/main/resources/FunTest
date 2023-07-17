@@ -1,7 +1,7 @@
-fun test1(hello, world){
+fun test1(x:string, y){
     for(var a = 6; a >= 0; a = a -1 ){
-        if(a > 3){print hello;}
-        else{print world;}
+        if(a > 3){print x;}
+        else{print y;}
     }
 }
 

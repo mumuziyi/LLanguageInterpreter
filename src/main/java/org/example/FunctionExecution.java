@@ -4,6 +4,7 @@ import org.example.Structure.ValueStructure;
 import org.example.Uitils.ReturnValue;
 import org.example.Uitils.TypeChecker;
 import org.example.stmt.Stmt;
+import org.example.type.Type;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class FunctionExecution {
         Function function = (Function) funEnv.getFunction(name);
         List<Token> parameter = function.params;
         List<Stmt> body = function.body;
+        List<Type> types = function.paramTypes;
 
         if (parameter.size() != arguments.size()){
             handler.outputErrorInfo("Number of parameters and arguments doesn't match", -1);
@@ -35,7 +37,14 @@ public class FunctionExecution {
         // bind the para and arguments
         for (int i = 0; i < parameter.size(); i++){
             Object value = arguments.get(i);
-            environment.addVar(parameter.get(i).lexeme,new ValueStructure(TypeChecker.ObjectCheck(value),value));
+            Type required = types.get(i);
+            Type given = TypeChecker.ObjectCheck(value);
+            if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
+                environment.addVar(parameter.get(i).lexeme,new ValueStructure(given,value));
+            }else {
+                handler.outputErrorInfo("Input argument for function : '" + function.name.lexeme +"' didn't match the requirement",-1);
+            }
+
         }
         Interpreter interpreter = new Interpreter(environment,funEnv);
         interpreter.interpreter(body);

@@ -90,9 +90,16 @@ public class Parser {
         // Start scan the parameters
         consume(LEFT_PAREN, "Expect '(' after function identifier");
         List<Token> parameters = new ArrayList<>();
+        List<Type> paramTypes = new ArrayList<>();
         while (!check(RIGHT_PAREN)){
             do {
                 parameters.add(consume(IDENTIFIER,"Expect parameter name"));
+                // if specify the type of the arguments
+                if (match(COLON)){
+                    paramTypes.add(getType());
+                }else {
+                    paramTypes.add(new Type(Type.PrimitiveType.NullType));
+                }
             }while (match(COMMA));
         }
         consume(RIGHT_PAREN, "Expect ')' at the end of the function declaration");
@@ -102,7 +109,7 @@ public class Parser {
 
         List<Stmt> body = block();
 
-        return new FunDecl(name,new Function(name,parameters,body));
+        return new FunDecl(name,new Function(name,parameters,body,paramTypes));
     }
 
 

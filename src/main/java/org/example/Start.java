@@ -53,7 +53,7 @@ public class Start {
 
 //        String filePath = "src/main/resources/declarationTest";
 //        String filePath = "src/main/resources/FlowControlTest";
-        String filePath = "src/main/resources/1TypeTest";
+        String filePath = "src/main/resources/FunTest";
 //        String filePath = "src/main/resources/DataStructureTest";
 
 
