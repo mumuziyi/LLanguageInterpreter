@@ -53,8 +53,13 @@ public class Start {
 
 //        String filePath = "src/main/resources/declarationTest";
 //        String filePath = "src/main/resources/FlowControlTest";
-        String filePath = "src/main/resources/FunTest";
+//        String filePath = "src/main/resources/FunTest";
 //        String filePath = "src/main/resources/DataStructureTest";
+
+        // Week 6
+        String filePath = "src/main/resources/Types/ProductTypeTest";
+//        String filePath = "src/main/resources/Types/SumTypeTest";
+
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

@@ -1,0 +1,7 @@
+tuple.getLeft();
+
+
+getLeft(){
+    getLeft(tuple);
+
+}

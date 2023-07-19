@@ -33,6 +33,17 @@
 - [Type Systems in Software Explained With Examples](https://thevaluable.dev/type-system-software-explained-example/)
 - [Type Systems in Programming Languages](https://www.tektutorialshub.com/programming/type-systems-in-programming-languages/)
 > type checking, type safety.Strongly Typed & Weakly Typed. Type Compatibility:Nominally typed，Structurally Typed，Duck Typing
+- [什么是函数式编程思维(What is Functional programming thinking)](https://www.zhihu.com/question/28292740)
+> Introduce what is functional programming language and the difference between it and Imperative programming.
+> [The Functional Programmer's Toolkit - Scott Wlaschin](https://www.youtube.com/watch?v=Nrp_LZ-XGsY&ab_channel=NDCConferences)
+- explain concept about the FP. Monoid,functor, monad and how them can be used in the program
+> [用“λ演算法”去理解，为什么函数式编程会有更少的bug](https://www.bilibili.com/video/BV1d34y1v7xr)
+- introduce lambda calculate, and the connection between turing machine and lambda calculus. Why turing machine used wider 
+- in the real world. the benefit and cons for TM and lambda.
+> [Deep understanding of Functional programming](https://tech.meituan.com/2022/10/13/dive-into-functional-programming-01.html)
+- Introduce the functional programming. What is lambda calculus, and use javaScrip to introduce each concept. It also try
+- to connect everything together: Monad, category, group, monoid.
+- 
 
 # Need to be read (or reading).
 - (Reading) [The complete guide to (external) Domain Specific Languages](https://tomassetti.me/domain-specific-languages/)

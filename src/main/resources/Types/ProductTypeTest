@@ -1,0 +1,26 @@
+// name, age, address;
+var Person:(string, (number, string)) = tuple("Chen", tuple(20,"Glasgow"));
+
+var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
+var test2 = tuple(3,test1);
+
+print test2;
+
+var a;
+a = "hello";
+print a + "--------";
+// didn't match error.
+//a = 1;
+
+var a:string = "hello";
+
+
+fun add(a:number, b:number, c:string){
+    print a+b;
+    print c;
+}
+
+add( 1, 2, "hello world");
+// didn't match error
+add( 1,2,3);
+

@@ -5,6 +5,7 @@ import org.example.Structure.ValueStructure;
 import org.example.type.Type;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Environment {
@@ -30,8 +31,17 @@ public class Environment {
         if (values.containsKey(name)){
             ValueStructure given = (ValueStructure) object;
             ValueStructure required = (ValueStructure) values.get(name);
-
-            // If user didn't specify the type
+            // If it's sumType, check in a loop
+            if (required.type.pt == Type.PrimitiveType.SumType){
+                for (Type type: required.type.params){
+                    if (given.type.equals(type)){
+                        values.put(name,new ValueStructure(required.type,given.value));
+                        return;
+                    }
+                }
+                handler.outputErrorInfo("The type of assign to '"+ name +"' didn't match required type", -1);
+            }
+            // If user didn't specify the type or they are the same type
             if (required.type.pt == Type.PrimitiveType.NullType ||given.type.equals(required.type)){
                 values.put(name,new ValueStructure(given.type,given.value));
                 return;

@@ -36,7 +36,6 @@ public class Interpreter {
                 System.out.println("Interpreter Error: " + e);
             }
             throw (ReturnValue) e;
-
         }
     }
 
@@ -120,8 +119,19 @@ public class Interpreter {
         Object value = null;
         if (var.initializer != null){
             value = evaluate(var.initializer);
+
             Type required = var.type;
             Type given = TypeChecker.ObjectCheck(value);
+
+            if (required.pt == Type.PrimitiveType.SumType){
+                for (Type type : required.params){
+                    if (given.equals(type)){
+                        environment.addVar(var.name.lexeme, new ValueStructure(required,value));
+                        return;
+                    }
+                }
+                handler.outputErrorInfo("The type of '" + var.name.lexeme +"' isn't correct during decl", -1);
+            }
 
             if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
                 if (required.pt == Type.PrimitiveType.NullType){
@@ -132,7 +142,7 @@ public class Interpreter {
             }else {
                 handler.outputErrorInfo("The type of '" + var.name.lexeme +"' isn't correct during decl", -1);
             }
-        }else {
+        }else {//initializer is null
             environment.addVar(var.name.lexeme,new ValueStructure(var.type,value));
         }
     }

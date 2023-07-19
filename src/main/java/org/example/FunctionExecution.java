@@ -39,9 +39,21 @@ public class FunctionExecution {
             Object value = arguments.get(i);
             Type required = types.get(i);
             Type given = TypeChecker.ObjectCheck(value);
-            if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
+            boolean isMeetRequirement = false;
+
+            if (required.pt == Type.PrimitiveType.SumType){
+                for (Type type : required.params){
+                    if (given.equals(type)){
+                        environment.addVar(parameter.get(i).lexeme, new ValueStructure(required,value));
+                        isMeetRequirement = true;
+                        break;
+                    }
+                }
+            }else if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
                 environment.addVar(parameter.get(i).lexeme,new ValueStructure(given,value));
-            }else {
+                isMeetRequirement = true;
+            }
+            if (!isMeetRequirement){
                 handler.outputErrorInfo("Input argument for function : '" + function.name.lexeme +"' didn't match the requirement",-1);
             }
 

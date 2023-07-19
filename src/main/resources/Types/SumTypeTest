@@ -1,0 +1,25 @@
+var a : <string, (string,number)> = tuple("hello",1);
+print a + "------";
+a = "hello";
+print a+ "--------";
+a = tuple("world",1);
+print a +"---------";
+
+//var b : <string, (string,number)> = tuple("hello","hello");
+
+
+fun add(a:<number, (string, number)>,b){
+    print a+b;
+}
+
+add(20,1);
+
+
+fun fib(n:<number, (string, number)>) {
+  if (n <= 1) return n;
+  return fib(n - 2) + fib(n - 1);
+}
+
+for( var a = 0; a < 20; a = a + 1){
+    print fib(a);
+}
