@@ -54,6 +54,10 @@ public class Type {
         }
         Type other = (Type) obj;
 
+        if (pt == PrimitiveType.AnyType){
+            return true;
+        }
+
         // 检查 pt 是否相等
         if (pt == null) {
             if (other.pt != null) {
@@ -62,6 +66,8 @@ public class Type {
         } else if (!pt.equals(other.pt)) {
             return false;
         }
+
+
 
         // 检查 params 中的值是否相等
         if (params == null) {

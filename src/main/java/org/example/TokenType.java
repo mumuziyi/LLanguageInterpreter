@@ -12,7 +12,7 @@ public enum TokenType {
     LESS, LESS_EQUAL,
 
     // Literals.
-    IDENTIFIER, STRING, NUMBER, BOOLEAN, LIST, TUPLE,
+    IDENTIFIER, STRING, NUMBER, BOOLEAN, LIST, TUPLE, ANY,UNIT,
 
     // Keywords.
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,

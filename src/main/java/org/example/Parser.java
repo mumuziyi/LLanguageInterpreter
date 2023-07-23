@@ -447,6 +447,12 @@ public class Parser {
         if (match(NUMBER)){
             return new Type(Type.PrimitiveType.NumberType);
         }
+        if (match(ANY)){
+            return new Type(Type.PrimitiveType.AnyType);
+        }
+        if (match(UNIT)){
+            return new Type(Type.PrimitiveType.UnitType);
+        }
         if (match(LESS)){
             List<Type> params = new ArrayList<>();
             while (!check(GREATER)){

@@ -41,8 +41,14 @@ public class Environment {
                 }
                 handler.outputErrorInfo("The type of assign to '"+ name +"' didn't match required type", -1);
             }
+
+            if (required.type.pt == Type.PrimitiveType.AnyType || required.type.pt == Type.PrimitiveType.UnitType){
+                values.put(name,new ValueStructure(required.type,given.value));
+                return;
+            }
+
             // If user didn't specify the type or they are the same type
-            if (required.type.pt == Type.PrimitiveType.NullType ||given.type.equals(required.type)){
+            if (required.type.pt == Type.PrimitiveType.NullType ||required.type.equals(given.type)){
                 values.put(name,new ValueStructure(given.type,given.value));
                 return;
             }

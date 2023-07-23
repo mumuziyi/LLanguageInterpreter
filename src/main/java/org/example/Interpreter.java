@@ -133,6 +133,16 @@ public class Interpreter {
                 handler.outputErrorInfo("The type of '" + var.name.lexeme +"' isn't correct during decl", -1);
             }
 
+            if (required.pt == Type.PrimitiveType.AnyType){
+                environment.addVar(var.name.lexeme,new ValueStructure(required,value));
+                return;
+            }
+
+            if (required.pt == Type.PrimitiveType.UnitType){
+                environment.addVar(var.name.lexeme, new ValueStructure(required,value));
+                return;
+            }
+
             if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
                 if (required.pt == Type.PrimitiveType.NullType){
                     var.type = given;

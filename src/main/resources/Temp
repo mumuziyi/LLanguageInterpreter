@@ -1,17 +1,90 @@
+// gen
+var s:(T,T) = ("a",1)  /  ("a", ("a", 1));
 
-add new structure (name, (type, object));
+fun apply(a, f:a ->a) {
+  return f(a);
+}
+
+// Function
+fun addOne(int a, print()){
+    return apply(a,print))
+}
+
+fun test(tuple(), add()){
+    apply(tuple,add)
+
+}
+(<$>) add x = apply 9(swap (add,x))
+
+add <$> x  = add(x)
+
+fun apply (x, add) {
+  add <$> x
+}
+
+fun add((a,a))
+
+fun print(result){
+    print result + 1;
+}
 
 
-var a:string = "hello world";
-
-typeof(a) , return string;
-
-"helo "
-if insto sting : TokenType.String.
-
-type level, init
-->
-parse
 
 
-set{ valid expression types }
+fun addTwo(int a){
+    print a + 2;
+}
+fun add(int a, int b){
+    return a + b;
+}
+
+f
+
+fun test(addTwo(a, addOne()) add())
+
+fun(Int, int) -> int
+
+
+fun test(a:int, b:int, fn(x,y)){
+    return fn(add(a,b), b);
+}
+
+test(1,2);
+
+fun add(a, b){
+    return a+ b}
+
+
+
+
+//
+<boolean, unit> 2 + 1;
+fun(b,b) - > b  8 =  2^3
+
+x+y : 5 + y: 5+ 1;
+
+fun (b,b,b).& - > b
+{
+    2^3;
+}
+
+
+ // f(string, int, args.type, <parma>)
+fun comp(f, g, arg ) {
+   return g(f(arg));
+}
+
+<name, (fun, a-> c , <>>
+// <$>:a -> c
+fun comp(f : a ->b , g : b -> c, arg : a ) : a -> c{
+   return g(f(arg));
+}
+
+fun comp(f : bool -> bool , bool -> bool, x ) : bool -> bool {
+
+
+fun add(int a, int b){
+
+}
+
+add(1,2)
