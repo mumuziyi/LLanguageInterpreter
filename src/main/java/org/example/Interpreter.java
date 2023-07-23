@@ -224,6 +224,25 @@ public class Interpreter {
         if (expr instanceof Logical) return evaluateLogical(expr);
         if (expr instanceof Call) return evaluateCall(expr);
         if (expr instanceof Tuple) return evaluateTuple(expr);
+        if (expr instanceof GetTupleLR) return evaluateGetTupleLR(expr);
+        return null;
+    }
+
+    // left( right(a) ) -> inner = right(a);
+    private Object evaluateGetTupleLR(Expr expr){
+        GetTupleLR getTupleLR = (GetTupleLR) expr;
+        Expr inner = getTupleLR.inner;
+
+        Object obj = evaluate(inner);
+
+                // check whether the identifier is a variable.
+        if (obj instanceof TupleStructure){
+            TupleStructure tupleValue = (TupleStructure) obj;
+            return getTupleLR.type == TokenType.LEFT?tupleValue.left : tupleValue.right;
+        }else {
+            handler.outputErrorInfo("The " + getTupleLR + " isn't a variable",-1);
+        }
+
         return null;
     }
 

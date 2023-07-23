@@ -16,7 +16,8 @@ public class Type {
         ListType,
         ProductType,
         SumType,
-        NullType
+        NullType,
+        ConverseType
     }
     public Type(PrimitiveType pt) {
        this.pt  = pt;

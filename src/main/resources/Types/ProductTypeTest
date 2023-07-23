@@ -7,6 +7,8 @@ var test2 = tuple(3,test1);
 
 print test2;
 
+print "Recursive tuple call: " + left(right(right(test2)));
+
 var a;
 a = "hello";
 print a + "--------";
@@ -23,6 +25,6 @@ fun add(a:number, b:number, c:string){
 
 add( 1, 2, "hello world");
 // didn't match error
-add( 1,2,3);
+//add( 1,2,3);
 
 

@@ -55,7 +55,8 @@ fun returnTest(a,b,c){
     return a + b + c;
 }
 
-print returnTest(1,2,3);
+var a = returnTest(1,2,3);
+print a;
 
 print "---------Fib Test-------------";
 fun fib(n) {

@@ -20,6 +20,8 @@ public class Environment {
     Environment(Environment enclosing){
         this.enclosing = enclosing;
     }
+
+    // <name:String,ValueStructure(required.type,value)>
     private final Map<String, Object> values = new HashMap<>();
 
 

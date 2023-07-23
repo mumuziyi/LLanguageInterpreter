@@ -40,6 +40,8 @@ public class Lexer {
         keywords.put("tuple",TUPLE);
         keywords.put("any",ANY);
         keywords.put("unit",UNIT);
+        keywords.put("left", LEFT);
+        keywords.put("right", RIGHT);
     }
 
     List<Token> tokenList = new LinkedList<>();

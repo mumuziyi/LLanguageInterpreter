@@ -122,3 +122,14 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
 2. If User specify the type: var a: string = "hello". add it to the env. and will report error if the 
 initializer isn't string: var:string = 1 (Error); 
 3. If didn't specify the type: NullType, and add the type after assign a value.
+4. User can use *any* to define anyType for a variable.
+5. ![img_4.png](img_4.png)
+
+# 9. Function
+1. FunctionEnv: Map<String,  Function(Token name, List<Token> params, List<Stmt> body,List<Type> paramTypes)> 
+2. fun:(int,int,any -> int) add(a,b,c){}
+3. fun add(a,b,c){return a + b + c};
+4. 
+5. fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{
+       return g(f(arg1,arg2,arg3));
+   }

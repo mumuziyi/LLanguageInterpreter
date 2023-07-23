@@ -57,11 +57,11 @@ public class Start {
 //        String filePath = "src/main/resources/DataStructureTest";
 
         // Week 6
-//        String filePath = "src/main/resources/Types/ProductTypeTest";
+        String filePath = "src/main/resources/Types/ProductTypeTest";
 //        String filePath = "src/main/resources/Types/SumTypeTest";
 
         // Week 7
-        String filePath = "src/main/resources/Types/AnyTypeTest";
+//        String filePath = "src/main/resources/Types/AnyTypeTest";
 
 
 

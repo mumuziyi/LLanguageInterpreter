@@ -144,6 +144,7 @@ public class Parser {
         if (match(FOR)) return forStatement();
         if (match(RETURN)) return returnStatement();
 
+
         return expressionStatement();
     }
 
@@ -395,6 +396,15 @@ public class Parser {
         }
         if (match(IDENTIFIER)){
             return new Variable(tokens.get(current - 1));
+        }
+        // left( right(a) ); right(a);
+        if (match(LEFT,RIGHT)){
+            TokenType type = getPrevious().type;
+            consume(LEFT_PAREN,"Expect '(' after expression ");
+            Expr inner = assignment();
+            consume(RIGHT_PAREN,"Expect ')' after expression ");
+            return new GetTupleLR(type,inner);
+
         }
         handler.outputErrorInfo("Unexpected token in primary()",tokens.get(current).line);
         return null;

@@ -11,3 +11,7 @@ print b;
 var c:(string, (any, string)) = tuple("hello", tuple(1, "world"));
 print c;
 
+var d:(any, any) = tuple("a", tuple("a", 1));
+print d;
+d = tuple("a",1);
+print d;

@@ -84,7 +84,23 @@ fun comp(f : bool -> bool , bool -> bool, x ) : bool -> bool {
 
 
 fun add(int a, int b){
+    return a + b;
+}
 
 }
 
 add(1,2)
+
+
+//
+fun add(a, b){
+    return a + b;
+}
+
+fun add1(a,b,5){
+    return a + b + 5;
+}
+
+
+
+
