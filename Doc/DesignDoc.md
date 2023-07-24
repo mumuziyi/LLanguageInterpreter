@@ -42,7 +42,7 @@ Statement / Expression precedence:
 > 
 > arguments     → expression ( "," expression )* ;
 > 
->primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
+>primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | LEFT | RIGHT;
 
 
 Structure of the program:
@@ -125,7 +125,10 @@ initializer isn't string: var:string = 1 (Error);
 4. User can use *any* to define anyType for a variable.
 5. ![img_4.png](img_4.png)
 
-# 9. Function
+# 9. Tuple
+1. get: 
+
+# 10. Function
 1. FunctionEnv: Map<String,  Function(Token name, List<Token> params, List<Stmt> body,List<Type> paramTypes)> 
 2. fun:(int,int,any -> int) add(a,b,c){}
 3. fun add(a,b,c){return a + b + c};

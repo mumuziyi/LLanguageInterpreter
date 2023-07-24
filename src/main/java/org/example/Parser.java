@@ -104,6 +104,11 @@ public class Parser {
         }
         consume(RIGHT_PAREN, "Expect ')' at the end of the function declaration");
 
+        Type returnType = null;
+        if (match(SEMICOLON)){
+            returnType = getType();
+        }
+
         // Start scan the body
         consume(LEFT_BRACE,"Expect '{' before the function body.");
 
@@ -462,6 +467,9 @@ public class Parser {
         }
         if (match(UNIT)){
             return new Type(Type.PrimitiveType.UnitType);
+        }
+        if (match(FUN)){
+
         }
         if (match(LESS)){
             List<Type> params = new ArrayList<>();

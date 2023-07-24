@@ -1,0 +1,9 @@
+var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
+
+var test2 = tuple(3,test1);
+
+print test2;
+
+print "Recursive tuple call: " + left(right(right(test2)));
+
+print left(tuple(2,4));

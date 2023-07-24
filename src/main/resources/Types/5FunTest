@@ -1,0 +1,72 @@
+// compTest
+print "-------------compTest-------------";
+//fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{
+//         return g(f(arg1,arg2,arg3));
+//     }
+fun f(a:(number, (number,number))){
+    print "Fun f is running";
+    var sum1 = left(a);
+    var sum2 = right(right(a)) + left(right(a));
+    return tuple(sum1, sum2);
+}
+
+fun g(a:(number, number)){
+    print "Fun g is running";
+    return left(a) + right(a);
+}
+
+print g(f(tuple(1, tuple(2,3))));
+
+fun compose(f,g,arg){
+    return g(f(arg));
+}
+
+// Error Test
+print "-------------Error Test-------------";
+
+print "==Type error==";
+fun f(a:(number, (number,number))){
+    print "Fun f is running";
+    var sum1 = left(a);
+    return tuple(sum1, "hello");
+}
+// print compose(f,g,tuple(1, tuple(2,3)));
+
+
+
+// return fun
+print "-------------return fun-------------";
+fun add(a,b){
+    fun add2(a,b){
+        return a + b;
+    }
+    return add2;
+}
+
+//fun add(a,b): fun number,number->number {
+//    fun add2(a,b){
+//        return a + b;
+//    }
+//    return add2;
+//}
+
+// That's why I shouldn't separate funEnv and varEnv.
+// Ambiguity: I can use var to receive the return value and store them in the varEnv instead funEnv,
+// though the return value is a function.
+var returnTest = add(1,2);
+print returnTest(1,2);
+
+// receive fun
+print "-------------receive fun-------------";
+fun receive0(a){
+    return a;
+}
+
+fun receive1(a,b:number){
+    return a(b);
+}
+
+print receive1(receive0, 1);
+
+
+
