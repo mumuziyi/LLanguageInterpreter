@@ -3,6 +3,7 @@ package org.example;
 import org.example.Structure.ValueStructure;
 import org.example.Uitils.ReturnValue;
 import org.example.Uitils.TypeChecker;
+import org.example.stmt.FunDecl;
 import org.example.stmt.Stmt;
 import org.example.type.Type;
 
@@ -24,7 +25,9 @@ public class FunctionExecution {
 
     // parameter for decl, argument for input value
     public Object call(){
-        Function function = (Function) funEnv.getFunction(name);
+        FunDecl decl = (FunDecl) funEnv.getFunction(name);
+
+        Function function = decl.function;
         List<Token> parameter = function.params;
         List<Stmt> body = function.body;
         List<Type> types = function.paramTypes;

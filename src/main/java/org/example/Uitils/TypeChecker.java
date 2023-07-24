@@ -39,6 +39,8 @@ public class TypeChecker {
         return TokenType.NIL;
     }
 
+
+
     public static Type ObjectCheck(Object object){
         if (object instanceof Integer || object instanceof Double || object instanceof Float){
             return new Type(Type.PrimitiveType.NumberType);

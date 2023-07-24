@@ -104,9 +104,9 @@ public class Parser {
         }
         consume(RIGHT_PAREN, "Expect ')' at the end of the function declaration");
 
-        Type returnType = null;
-        if (match(SEMICOLON)){
-            returnType = getType();
+        Type type = new Type(Type.PrimitiveType.AnyType);
+        if (match(COLON)){
+            type = getType();
         }
 
         // Start scan the body
@@ -114,7 +114,7 @@ public class Parser {
 
         List<Stmt> body = block();
 
-        return new FunDecl(name,new Function(name,parameters,body,paramTypes));
+        return new FunDecl(name,new Function(name,parameters,body,paramTypes), type);
     }
 
 
@@ -469,7 +469,16 @@ public class Parser {
             return new Type(Type.PrimitiveType.UnitType);
         }
         if (match(FUN)){
-
+            return new Type(Type.PrimitiveType.FunctionType);
+//            // Last is the return type.
+//            List<Type> typeList = new ArrayList<>();
+//            while (!match(CONVERT)){
+//                do {
+//                    typeList.add(getType());
+//                }while (match(COMMA));
+//            }
+//            typeList.add(getType());
+//            return new Type(Type.PrimitiveType.FunctionType,typeList);
         }
         if (match(LESS)){
             List<Type> params = new ArrayList<>();

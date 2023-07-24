@@ -73,8 +73,7 @@ public class Lexer {
             case ',': addToken(COMMA); break;
             case '.': addToken(DOT); break;
             case '-':
-//                addToken(nextMatch('>')?  );
-                addToken(MINUS); break;
+                addToken(nextMatch('>')? CONVERT:MINUS );break;
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
             case '*': addToken(STAR); break;

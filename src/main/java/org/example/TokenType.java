@@ -11,6 +11,8 @@ public enum TokenType {
     GREATER, GREATER_EQUAL,
     LESS, LESS_EQUAL,
 
+    CONVERT,
+
     // Literals.
     IDENTIFIER, STRING, NUMBER, BOOLEAN, LIST, TUPLE, ANY,UNIT,
 

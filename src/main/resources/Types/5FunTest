@@ -1,3 +1,9 @@
+fun add(a,b) : string{
+    return a + b + " ";
+}
+
+print add(1,2);
+
 // compTest
 print "-------------compTest-------------";
 //fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{

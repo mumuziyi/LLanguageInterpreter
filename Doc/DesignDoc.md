@@ -136,3 +136,4 @@ initializer isn't string: var:string = 1 (Error);
 5. fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{
        return g(f(arg1,arg2,arg3));
    }
+6. Default return type: AnyType.

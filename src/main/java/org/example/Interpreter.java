@@ -77,7 +77,7 @@ public class Interpreter {
 
     private void executeFunDecl(Stmt stmt){
         FunDecl funDecl = (FunDecl) stmt;
-        funEnv.addVar(funDecl.name.lexeme,funDecl.function);
+        funEnv.addVar(funDecl.name.lexeme,funDecl);
     }
     private void executeWhile(Stmt statement){
         While whileStmt = (While) statement;
@@ -257,8 +257,10 @@ public class Interpreter {
         Call call = (Call) expr;
 
         Object callee = evaluate(call.callee);
+        FunDecl funDecl = (FunDecl)callee;
+        Type requiredType = funDecl.type;
 
-        Function function = (Function) callee;
+        Function function = funDecl.function;
 
         List<Object> arguments = new ArrayList<>();
 
@@ -270,7 +272,17 @@ public class Interpreter {
         try {
             execution.call();
         }catch (ReturnValue returnValue){
-            return returnValue.value;
+            Type returnType = TypeChecker.ObjectCheck(returnValue.value);
+
+            // If it's function type, don't check type until execute it.
+            if (requiredType.pt == Type.PrimitiveType.FunctionType || requiredType.equals(returnType)){
+                return returnValue.value;
+            }else {
+                handler.outputErrorInfo("Return type of the function <" + function.name.lexeme + "> didn't meet" +
+                        "the requirement",-1);
+            }
+
+
         }
         return null;
 
