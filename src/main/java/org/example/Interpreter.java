@@ -277,6 +277,8 @@ public class Interpreter {
 
             // If it's function type, don't check type until execute it.
             if (requiredType.pt == Type.PrimitiveType.FunctionType || requiredType.equals(returnType)){
+                funDecl.returnType = returnType;
+                funEnv.addVar(((Variable)call.callee).name.lexeme,funDecl);
                 return returnValue.value;
             }else {
                 handler.outputErrorInfo("Return type of the function <" + function.name.lexeme + "> didn't meet" +
