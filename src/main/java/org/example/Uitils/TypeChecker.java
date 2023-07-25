@@ -2,6 +2,7 @@ package org.example.Uitils;
 
 import org.example.*;
 import org.example.Structure.TupleStructure;
+import org.example.stmt.FunDecl;
 import org.example.type.Type;
 
 import java.util.ArrayList;
@@ -62,6 +63,13 @@ public class TypeChecker {
             list.add(ObjectCheck(right));
             return new Type(Type.PrimitiveType.ProductType,list);
         }
+        if (object instanceof FunDecl){
+            FunDecl funDecl = (FunDecl) object;
+            List<Type> typeList = funDecl.function.paramTypes;
+            typeList.add(funDecl.returnType);
+            return new Type(Type.PrimitiveType.FunctionType,typeList);
+        }
+
 
         return new Type(Type.PrimitiveType.NullType);
     }

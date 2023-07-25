@@ -123,17 +123,15 @@ newEnvironment.enclosing  = baseEnvironment; Recursively.
 initializer isn't string: var:string = 1 (Error); 
 3. If didn't specify the type: NullType, and add the type after assign a value.
 4. User can use *any* to define anyType for a variable.
-5. ![img_4.png](img_4.png)
 
 # 9. Tuple
 1. get: 
 
 # 10. Function
-1. FunctionEnv: Map<String,  Function(Token name, List<Token> params, List<Stmt> body,List<Type> paramTypes)> 
-2. fun:(int,int,any -> int) add(a,b,c){}
-3. fun add(a,b,c){return a + b + c};
-4. 
-5. fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{
-       return g(f(arg1,arg2,arg3));
-   }
-6. Default return type: AnyType.
+- FunctionEnv: Map<String,  Function(Token name, List<Token> params, List<Stmt> body,List<Type> paramTypes)>
+- Can specify the type of args: fun add(a:number, b: number, c: fun number,number -> string);
+- can Specify the return type: fun test(a,b) : string{...}.Default return type: AnyType
+  - Check the return type if meet the Return statement.
+  - If specify the return type is fun, don't check it's args and return type.
+  - Check args type when executing the function (including function). lazy execution.
+- FunEnv<name:String, funDecl<name:String, function<name, params, body,paramtypes>, returnType >>

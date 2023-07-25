@@ -38,7 +38,7 @@ public class Type {
     // var a  : <number,string>  = 3 ; // or 'hello world'
     public Type(PrimitiveType pt, List<Type> params) {
         this.pt = pt;
-        if (PrimitiveType.ProductType == pt || PrimitiveType.SumType == pt) {
+        if (PrimitiveType.ProductType == pt || PrimitiveType.SumType == pt|| pt == PrimitiveType.FunctionType) {
             this.params.addAll(params);
         } else {
             //report error
@@ -67,8 +67,6 @@ public class Type {
         } else if (!pt.equals(other.pt)) {
             return false;
         }
-
-
 
         // 检查 params 中的值是否相等
         if (params == null) {

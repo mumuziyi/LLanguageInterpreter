@@ -1,12 +1,51 @@
-fun add(a,b) : string{
-    return a + b + " ";
+// Error 1,
+print "== Error1:  ==";
+fun add(a:number,b:number){
+    return a + b;
 }
 
-print add(1,2);
+
+fun test(a:fun number,number -> string, arg1, arg2) : number{
+    print("test is running");
+    var temp = a(arg1,arg2);
+    return 1;
+}
+
+print test(add, 1, 2);
+
+
+// return fun
+print "-------------return fun-------------";
+fun add(a,b){
+    fun add2(a,b){
+        return a + b;
+    }
+    return add2;
+}
+
+// That's why I shouldn't separate funEnv and varEnv.
+// Ambiguity: I can use var to receive the return value and store them in the varEnv instead funEnv,
+// though the return value is a function.
+var returnTest = add(1,2);
+print returnTest(1,2);
+
+// receive fun
+print "-------------receive fun-------------";
+fun receive0(a){
+    return a;
+}
+
+fun receive1(a,b:number){
+    return a(b);
+}
+
+print receive1(receive0, 1);
+
+
 
 // compTest
 print "-------------compTest-------------";
-//fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) : (a,(b,c)) -> f{
+//fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) :  f{
 //         return g(f(arg1,arg2,arg3));
 //     }
 fun f(a:(number, (number,number))){
@@ -40,39 +79,23 @@ fun f(a:(number, (number,number))){
 
 
 
-// return fun
-print "-------------return fun-------------";
-fun add(a,b){
-    fun add2(a,b){
-        return a + b;
-    }
-    return add2;
+
+// function type decl Test
+print "---------------FunDecl type test---------------";
+
+fun add(a:number,b:number) : number{
+    return a + b;
 }
 
-//fun add(a,b): fun number,number->number {
-//    fun add2(a,b){
-//        return a + b;
-//    }
-//    return add2;
-//}
 
-// That's why I shouldn't separate funEnv and varEnv.
-// Ambiguity: I can use var to receive the return value and store them in the varEnv instead funEnv,
-// though the return value is a function.
-var returnTest = add(1,2);
-print returnTest(1,2);
-
-// receive fun
-print "-------------receive fun-------------";
-fun receive0(a){
-    return a;
+fun test(a:fun number,number -> number, arg1, arg2) : number{
+    return a(arg1,arg2);
 }
 
-fun receive1(a,b:number){
-    return a(b);
-}
+print test(add, 1, 2);
 
-print receive1(receive0, 1);
+
+
 
 
 

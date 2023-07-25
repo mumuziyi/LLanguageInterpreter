@@ -12,11 +12,11 @@ public class FunDecl extends Stmt{
     public Function function;
 
     // last para is return type;
-    public Type type;
+    public Type returnType;
 
-    public FunDecl(Token name, Function function, Type type) {
+    public FunDecl(Token name, Function function, Type returnType) {
         this.name = name;
         this.function = function;
-        this.type = type;
+        this.returnType = returnType;
     }
 }

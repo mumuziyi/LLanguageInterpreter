@@ -258,7 +258,7 @@ public class Interpreter {
 
         Object callee = evaluate(call.callee);
         FunDecl funDecl = (FunDecl)callee;
-        Type requiredType = funDecl.type;
+        Type requiredType = funDecl.returnType;
 
         Function function = funDecl.function;
 
@@ -268,6 +268,7 @@ public class Interpreter {
             arguments.add(evaluate(argument));
         }
 
+        // prepare to execute
         FunctionExecution execution = new FunctionExecution(function.name.lexeme,arguments,funEnv);
         try {
             execution.call();

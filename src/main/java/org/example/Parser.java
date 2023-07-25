@@ -96,7 +96,8 @@ public class Parser {
                 parameters.add(consume(IDENTIFIER,"Expect parameter name"));
                 // if specify the type of the arguments
                 if (match(COLON)){
-                    paramTypes.add(getType());
+                    Type curType = getType();
+                    paramTypes.add(curType);
                 }else {
                     paramTypes.add(new Type(Type.PrimitiveType.NullType));
                 }
@@ -469,16 +470,17 @@ public class Parser {
             return new Type(Type.PrimitiveType.UnitType);
         }
         if (match(FUN)){
-            return new Type(Type.PrimitiveType.FunctionType);
-//            // Last is the return type.
-//            List<Type> typeList = new ArrayList<>();
-//            while (!match(CONVERT)){
-//                do {
-//                    typeList.add(getType());
-//                }while (match(COMMA));
-//            }
-//            typeList.add(getType());
-//            return new Type(Type.PrimitiveType.FunctionType,typeList);
+//            return new Type(Type.PrimitiveType.FunctionType);
+            // Last is the return type.
+            List<Type> typeList = new ArrayList<>();
+            while (!match(CONVERT)){
+                do {
+                    typeList.add(getType());
+                }while (match(COMMA));
+            }
+            typeList.add(getType());
+            Type returnTyp = new Type(Type.PrimitiveType.FunctionType,typeList);
+            return returnTyp;
         }
         if (match(LESS)){
             List<Type> params = new ArrayList<>();

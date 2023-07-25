@@ -52,7 +52,7 @@ public class FunctionExecution {
                         break;
                     }
                 }
-            }else if (required.equals(given) || required.pt == Type.PrimitiveType.NullType){
+            }else if (given.equals(required) || required.pt == Type.PrimitiveType.NullType){
                 environment.addVar(parameter.get(i).lexeme,new ValueStructure(given,value));
                 isMeetRequirement = true;
             }
