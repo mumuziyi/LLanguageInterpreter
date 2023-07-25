@@ -1,0 +1,12 @@
+fun exponent(a:number,b:number){
+    var result = 1;
+    for(var count = 0; count < b; count = count + 1){
+        result = result * a;
+    }
+    return result;
+}
+
+
+
+PrintLine("Math library loading completed");
+

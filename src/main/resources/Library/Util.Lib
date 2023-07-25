@@ -1,0 +1,15 @@
+fun PrintLine(line){
+    print line;
+}
+
+fun getLeft(a:(any,any)){
+    return left(a);
+}
+
+fun getRight(a:(any,any)){
+    return right(a);
+}
+
+
+PrintLine("Util library loading completed");
+

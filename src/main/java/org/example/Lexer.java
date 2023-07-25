@@ -42,6 +42,7 @@ public class Lexer {
         keywords.put("unit",UNIT);
         keywords.put("left", LEFT);
         keywords.put("right", RIGHT);
+        keywords.put("include",INCLUDE);
     }
 
     List<Token> tokenList = new LinkedList<>();
@@ -78,6 +79,7 @@ public class Lexer {
             case ';': addToken(SEMICOLON); break;
             case '*': addToken(STAR); break;
             case ':': addToken(COLON); break;
+            case '#': addToken(SHARP); break;
                 // check is ! or !=
             case '!': addToken(nextMatch('=')? BANG_EQUAL: BANG);break;
             case '=': addToken(nextMatch('=')? EQUAL_EQUAL: EQUAL);break;

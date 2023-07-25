@@ -2,7 +2,7 @@ package org.example;
 
 public enum TokenType {
     // Single-character tokens.
-    LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
+    LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,SHARP,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,COLON,
 
     // One or two character tokens.
@@ -19,6 +19,7 @@ public enum TokenType {
     // Keywords.
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,LEFT,RIGHT,
+    INCLUDE,
 
     // List function
     GET_STRUCTURE, ADD_STRUCTURE,REMOVE_STRUCTURE,SIZE_STRUCTURE,

@@ -15,25 +15,31 @@ public class Start {
     public static int line = 0;
     private static List<Token> tokenList = new LinkedList<>();
     public static boolean hadError = false;
+    //        runFromTerminal();
+//        String filePath = "src/main/resources/declarationTest";
+//        String filePath = "src/main/resources/FlowControlTest";
+//        String filePath = "src/main/resources/FunTest";
+//        String filePath = "src/main/resources/DataStructureTest";
+
+    // Week 6
+//        String filePath = "src/main/resources/Types/ProductTypeTest";
+//        String filePath = "src/main/resources/Types/SumTypeTest";
+
+    // Week 7
+//        public static String filePath = "src/main/resources/Types/AnyTypeTest";
+//        public static String filePath = "src/main/resources/Types/4TupleGetTest";
+        public static String filePath = "src/main/resources/Types/5FunTest";
+//    public static String filePath = "src/main/resources/Types/6LibTest";
+
+    //Test
+
+
+
+//    public static String filePath =  "src/main/resources/Library/Util.Lib";
     public static void main(String[] args) {
-//        runFromTerminal();
-
-        runFromFile();
-
-//
-//        Expr expression = new Binary(
-//                new Unary(
-//                        new Token(TokenType.MINUS, "-", null, 1),
-//                        new Literal(123)),
-//                new Token(TokenType.STAR, "*", null, 1),
-//                new Grouping(
-//                        new Literal(45.67)));
-//
-//
-//        PrintAST printer = new PrintAST();
-//        System.out.println(printer.printAST(expression));
 
 
+        runFromFile(filePath);
     }
 
     // get code from terminal
@@ -49,23 +55,7 @@ public class Start {
     }
 
     // Get code form the file
-    public static void runFromFile(){
-
-//        String filePath = "src/main/resources/declarationTest";
-//        String filePath = "src/main/resources/FlowControlTest";
-//        String filePath = "src/main/resources/FunTest";
-//        String filePath = "src/main/resources/DataStructureTest";
-
-        // Week 6
-//        String filePath = "src/main/resources/Types/ProductTypeTest";
-//        String filePath = "src/main/resources/Types/SumTypeTest";
-
-        // Week 7
-//        String filePath = "src/main/resources/Types/AnyTypeTest";
-//        String filePath = "src/main/resources/Types/4TupleGetTest";
-        String filePath = "src/main/resources/Types/5FunTest";
-
-
+    public static void runFromFile(String filePath){
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String code;
             while ((code = reader.readLine()) != null) {

@@ -8,14 +8,21 @@ import org.example.expr.*;
 import org.example.stmt.*;
 import org.example.type.Type;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import static org.example.Start.getTokenList;
 
 public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
     Environment environment = new Environment();
 
     Environment funEnv = new Environment();
+
+    // Only include statement use it;
+    List<Stmt> ImportStmt;
 
     public Interpreter(Environment environment, Environment funEnv){
         this.environment = environment;
@@ -27,6 +34,7 @@ public class Interpreter {
 
     // Get a list of statements from Parser, execute every statement one by one
     public void interpreter(List<Stmt> statements){
+        ImportStmt = statements;
         try {
             for (Stmt statement: statements){
                 execute(statement);
@@ -225,8 +233,104 @@ public class Interpreter {
         if (expr instanceof Call) return evaluateCall(expr);
         if (expr instanceof Tuple) return evaluateTuple(expr);
         if (expr instanceof GetTupleLR) return evaluateGetTupleLR(expr);
+        if (expr instanceof Include) return evaluateInclude(expr);
         return null;
     }
+
+    private Object evaluateInclude(Expr expr){
+        String libPath = "src/main/resources/Library/";
+        Include include = (Include)expr;
+        List<String> importList = include.nameList;
+
+        List<Stmt> MergedStmtList = ImportStmt;
+        MergedStmtList.remove(0);
+        List<Stmt> another = new ArrayList<>();
+
+        for (String name: importList){
+            another = getImportStmtList(libPath + name);
+            another.addAll(MergedStmtList);
+            MergedStmtList = another;
+        }
+
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpreter(another);
+        System.exit(0);
+        return null;
+    }
+
+    public List<Stmt> getImportStmtList(String filePath){
+        List<Token> tokenList = new ArrayList<>();
+        List<Stmt> expr = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String code;
+            while ((code = reader.readLine()) != null) {
+                // 处理每一行的逻辑
+                tokenList.addAll(getTokenList(code));
+            }
+            tokenList.add(new Token(TokenType.EOF, "", null, -1));
+            Parser parser = new Parser(tokenList);
+            expr = parser.parse();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return expr;
+    }
+    private void executeIncludeExpr(Expr expr){
+        Include importFileName = (Include)expr;
+        List<String> libList = importFileName.nameList;
+        String folderPath = "src/main/resources/Temp";
+        String targetName = "MergeTemp";
+
+        // If mergeTemp already exits, merge it with current lib
+        try {
+            BufferedReader reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
+                    + importFileName.nameList.get(0)));
+            BufferedReader reader2 = new BufferedReader(new FileReader(Start.filePath));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath + "/" + targetName));
+            mergeFile(reader1,reader2,writer);
+
+            for (int i = 1; i < libList.size(); i++){
+                reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
+                        + importFileName.nameList.get(i)));
+                reader2 = new BufferedReader(new FileReader(folderPath + "/" + targetName));
+                mergeFile(reader1,reader2,writer);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+    }
+
+    private void mergeFile(BufferedReader reader1, BufferedReader reader2, BufferedWriter writer){
+
+        try {
+            String line;
+
+            // 合并第一个文件内容到输出文件
+            while ((line = reader1.readLine()) != null) {
+                writer.write(line);
+                writer.newLine(); // 添加换行符
+            }
+
+            // 合并第二个文件内容到输出文件
+            while ((line = reader2.readLine()) != null) {
+                writer.write(line);
+                writer.newLine(); // 添加换行符
+            }
+
+            // 关闭流
+            reader1.close();
+            reader2.close();
+            writer.close();
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
+
 
     // left( right(a) ) -> inner = right(a);
     private Object evaluateGetTupleLR(Expr expr){
@@ -277,8 +381,8 @@ public class Interpreter {
 
             // If it's function type, don't check type until execute it.
             if (requiredType.pt == Type.PrimitiveType.FunctionType || requiredType.equals(returnType)){
-                funDecl.returnType = returnType;
-                funEnv.addVar(((Variable)call.callee).name.lexeme,funDecl);
+//                funDecl.returnType = returnType;
+//                funEnv.addVar(((Variable)call.callee).name.lexeme,funDecl);
                 return returnValue.value;
             }else {
                 handler.outputErrorInfo("Return type of the function <" + function.name.lexeme + "> didn't meet" +

@@ -55,7 +55,7 @@ public class Type {
         }
         Type other = (Type) obj;
 
-        if (pt == PrimitiveType.AnyType){
+        if (pt == PrimitiveType.AnyType || ((Type) obj).pt == PrimitiveType.AnyType){
             return true;
         }
 

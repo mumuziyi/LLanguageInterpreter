@@ -99,7 +99,7 @@ public class Parser {
                     Type curType = getType();
                     paramTypes.add(curType);
                 }else {
-                    paramTypes.add(new Type(Type.PrimitiveType.NullType));
+                    paramTypes.add(new Type(Type.PrimitiveType.AnyType));
                 }
             }while (match(COMMA));
         }
@@ -411,6 +411,18 @@ public class Parser {
             consume(RIGHT_PAREN,"Expect ')' after expression ");
             return new GetTupleLR(type,inner);
 
+        }
+        if (match(SHARP)){
+            if (match(INCLUDE)){
+                //# include "Math.lib","Util.lib";
+                List<String> libList = new ArrayList<>();
+                do {
+                    libList.add((String) getCurrent().literal);
+                    current+=1;
+                }while (match(COMMA));
+
+                return new Include(libList);
+            }
         }
         handler.outputErrorInfo("Unexpected token in primary()",tokens.get(current).line);
         return null;
