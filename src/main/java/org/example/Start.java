@@ -28,8 +28,8 @@ public class Start {
     // Week 7
 //        public static String filePath = "src/main/resources/Types/AnyTypeTest";
 //        public static String filePath = "src/main/resources/Types/4TupleGetTest";
-        public static String filePath = "src/main/resources/Types/5FunTest";
-//    public static String filePath = "src/main/resources/Types/6LibTest";
+//        public static String filePath = "src/main/resources/Types/5FunTest";
+    public static String filePath = "src/main/resources/Types/6LibTest";
 
     //Test
 

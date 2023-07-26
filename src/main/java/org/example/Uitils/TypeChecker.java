@@ -65,7 +65,7 @@ public class TypeChecker {
         }
         if (object instanceof FunDecl){
             FunDecl funDecl = (FunDecl) object;
-            List<Type> typeList = funDecl.function.paramTypes;
+            List<Type> typeList = new ArrayList<>(funDecl.function.paramTypes);
             typeList.add(funDecl.returnType);
             return new Type(Type.PrimitiveType.FunctionType,typeList);
         }

@@ -53,7 +53,8 @@ public class FunctionExecution {
                     }
                 }
             }else if (given.equals(required) || required.pt == Type.PrimitiveType.NullType){
-                environment.addVar(parameter.get(i).lexeme,new ValueStructure(given,value));
+                // delete last type (last is return type,shouldn't ad paramType)
+                environment.addVar(parameter.get(i).lexeme,value);
                 isMeetRequirement = true;
             }
             if (!isMeetRequirement){

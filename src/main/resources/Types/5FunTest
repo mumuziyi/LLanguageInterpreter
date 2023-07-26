@@ -1,21 +1,3 @@
-
-// Error3
-print "== Error3: partial type knowledge==";
-fun add(a:number,b:number){
-    return a + b;
-}
-
-
-fun test(a:fun number,number -> string, arg1, arg2) : number{
-    print("test is running");
-    var temp = a(arg1,arg2);
-    return 1;
-}
-
-print test(add, 1, 2);
-print test(add, 1, 2);
-
-
 // return fun
 print "-------------return fun-------------";
 fun add(a,b){
@@ -93,6 +75,7 @@ fun test(a:fun number,number -> number, arg1, arg2) : number{
 
 print test(add, 1, 2);
 
+
 // Error 1,
 print "== Error1: Error checking in decl ==";
 fun add(a:number,b:number):number{
@@ -136,7 +119,6 @@ fun test(a:fun number,number -> string, arg1, arg2) : number{
     return 1;
 }
 
-print test(add, 1, 2);
 print test(add, 1, 2);
 
 

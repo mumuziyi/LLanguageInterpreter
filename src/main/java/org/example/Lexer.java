@@ -43,6 +43,7 @@ public class Lexer {
         keywords.put("left", LEFT);
         keywords.put("right", RIGHT);
         keywords.put("include",INCLUDE);
+        keywords.put("funtype",FUNTYPE);
     }
 
     List<Token> tokenList = new LinkedList<>();
