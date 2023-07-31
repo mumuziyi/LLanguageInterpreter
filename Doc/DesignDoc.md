@@ -134,4 +134,4 @@ initializer isn't string: var:string = 1 (Error);
   - Check the return type if meet the Return statement.
   - If specify the return type is fun, don't check it's args and return type.
   - Check args type when executing the function (including function). lazy execution.
-- FunEnv<name:String, funDecl<name:String, function<name, params, body,paramtypes>, returnType >>
+- FunEnv<name:String, funDecl<name:String, function<name, params, body,paramTypes>, returnType >>

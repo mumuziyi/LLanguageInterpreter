@@ -29,11 +29,12 @@ public class Start {
 //        public static String filePath = "src/main/resources/Types/AnyTypeTest";
 //        public static String filePath = "src/main/resources/Types/4TupleGetTest";
 //        public static String filePath = "src/main/resources/Types/5FunTest";
-    public static String filePath = "src/main/resources/Types/6LibTest";
+//    public static String filePath = "src/main/resources/Types/6LibTest";
 
     //Test
 
-
+//    public static String filePath = "src/main/resources/Types/7TupleExprTest";
+    public static String filePath = "src/main/resources/Types/8ListTest";
 
 //    public static String filePath =  "src/main/resources/Library/Util.Lib";
     public static void main(String[] args) {

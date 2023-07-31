@@ -1,3 +1,4 @@
+
 // return fun
 print "-------------return fun-------------";
 fun add(a,b){
@@ -9,6 +10,10 @@ fun add(a,b){
 
 var returnTest = add(1,2);
 print returnTest(1,2);
+
+// Return fun test
+
+
 
 // receive fun
 print "-------------receive fun-------------";
@@ -26,7 +31,7 @@ print receive1(receive0, 1);
 
 // compTest
 print "-------------compTest-------------";
-//fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg1 : a, arg2:b, arg3:c ) :  f{
+//fun comp(f : (a,(b,c))) -> (d,e) , g : (d,e) -> f, arg: (a( b,c))) ) :  f{
 //         return g(f(arg1,arg2,arg3));
 //     }
 fun f(a:(number, (number,number))){
@@ -57,8 +62,6 @@ fun f(a:(number, (number,number))){
     return tuple(sum1, "hello");
 }
 // print compose(f,g,tuple(1, tuple(2,3)));
-
-
 
 
 // function type decl Test
@@ -104,7 +107,7 @@ fun test(a:fun number,number -> string, arg1, arg2) : number{
     return 1;
 }
 
-//print test(add, 1, 2);
+// print test(add, 1, 2);
 
 // Error3
 print "== Error3: partial type knowledge==";

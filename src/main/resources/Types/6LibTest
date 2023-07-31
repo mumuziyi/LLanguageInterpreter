@@ -6,3 +6,5 @@ var a = tuple(1,tuple(2,3));
 
 PrintLine(getLeft(a) + getLeft(getRight(a)) + getRight(getRight(a)) ) ;
 
+
+

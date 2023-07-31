@@ -79,8 +79,11 @@ public class Lexer {
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
             case '*': addToken(STAR); break;
-            case ':': addToken(COLON); break;
             case '#': addToken(SHARP); break;
+//            case '[': addToken(nextMatch(']')?LR_BRACKET: LEFT_BRACKET); break;
+            case ']': addToken(RIGHT_BRACKET);break;
+            case '[': addToken(LEFT_BRACKET);break;
+            case ':': addToken(nextMatch(':')? COLON_COLON: COLON); break;
                 // check is ! or !=
             case '!': addToken(nextMatch('=')? BANG_EQUAL: BANG);break;
             case '=': addToken(nextMatch('=')? EQUAL_EQUAL: EQUAL);break;

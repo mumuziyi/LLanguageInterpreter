@@ -234,7 +234,17 @@ public class Interpreter {
         if (expr instanceof Tuple) return evaluateTuple(expr);
         if (expr instanceof GetTupleLR) return evaluateGetTupleLR(expr);
         if (expr instanceof Include) return evaluateInclude(expr);
+        if (expr instanceof ListExpr) return evaluateListExpr(expr);
         return null;
+    }
+
+    private Object evaluateListExpr(Expr expr){
+        ListExpr listExpr = (ListExpr) expr;
+        List<Object> list = new ArrayList<>();
+        for (Expr temp: listExpr.list){
+            list.add(evaluate(temp));
+        }
+        return listExpr;
     }
 
     private Object evaluateInclude(Expr expr){

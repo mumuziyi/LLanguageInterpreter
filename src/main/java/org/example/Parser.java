@@ -18,6 +18,8 @@ public class Parser {
     private final List<Token> tokens;
     private int current = 0;
 
+    private int ListLayer = 0;
+
     Parser(List<Token> tokens){
         this.tokens = tokens;
     }
@@ -33,7 +35,7 @@ public class Parser {
 
     private Stmt declaration(){
         if (match(VAR)) return varDeclaration();
-        if (match(LIST)) return listDeclaration();
+//        if (match(LIST)) return listDeclaration();
         if (match(FUN)) return funDeclaration();
         else return statement();
     }
@@ -122,7 +124,7 @@ public class Parser {
     private Stmt varDeclaration(){
         Token name = consume(IDENTIFIER, " Expected identifier after var declaration");
 
-        Type type = new Type(Type.PrimitiveType.NullType);
+        Type type = new Type(Type.PrimitiveType.AnyType);
         // whether user specify the type of the variable.
         if (match(COLON)){
             type = getType();
@@ -260,7 +262,7 @@ public class Parser {
     }
 
     private Expr assignment(){
-        Expr expr = tuple();
+        Expr expr = tupleOrList();
 
         if (match(EQUAL)){
             Token equals = tokens.get(current - 1);
@@ -277,7 +279,7 @@ public class Parser {
     }
 
     // var a = tuple(1, tuple(1,2))
-    private Expr tuple(){
+    private Expr tupleOrList(){
         if (match(TUPLE)){
             consume(LEFT_PAREN,"Expect '(' after tuple");
             Expr left = assignment();
@@ -285,6 +287,24 @@ public class Parser {
             Expr right = assignment();
             consume(RIGHT_PAREN,"Expect ')' at the end of tuple");
             return new Tuple(left,right);
+        }
+        //var a = list 2 ：1:[]; // list []
+        if (match(LIST) || ListLayer != 0){
+//            ListLayer ++;
+//            Expr left = assignment();
+//            consume(COLON, "Expect ':' between list decl");
+//            Expr right = assignment();
+//            ListLayer --;
+
+            //var a = list []:1:2:3;
+            consume(LEFT_BRACKET,"Expect '[' after list decl");
+            consume(RIGHT_BRACKET, "Expect ']' after list decl");
+            List<Expr> list = new ArrayList<>();
+            while (match(COLON)){
+                list.add(assignment());
+            }
+
+            return new ListExpr(list);
         }
 
         return or();
