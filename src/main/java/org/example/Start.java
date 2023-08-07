@@ -18,7 +18,7 @@ public class Start {
     //        runFromTerminal();
 //        String filePath = "src/main/resources/declarationTest";
 //        String filePath = "src/main/resources/FlowControlTest";
-//        String filePath = "src/main/resources/FunTest";
+//        public static String filePath = "src/main/resources/FunTest";
 //        String filePath = "src/main/resources/DataStructureTest";
 
     // Week 6
@@ -34,8 +34,8 @@ public class Start {
     //Test
 
 //    public static String filePath = "src/main/resources/Types/7TupleExprTest";
-    public static String filePath = "src/main/resources/Types/8ListTest";
-
+//    public static String filePath = "src/main/resources/Types/8ListTest";
+    public static String filePath = "src/main/resources/Types/9MonadTest";
 //    public static String filePath =  "src/main/resources/Library/Util.Lib";
     public static void main(String[] args) {
 

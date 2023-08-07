@@ -1,0 +1,16 @@
+fun add3(a){
+    return a + 3;
+}
+
+fun pot4(a){
+    return a * a * a * a;
+}
+
+fun bind(a){
+    return a;
+}
+
+var x = 3;
+
+var result = monad.x.add3().pot4();
+print result;

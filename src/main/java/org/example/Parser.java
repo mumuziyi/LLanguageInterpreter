@@ -262,7 +262,7 @@ public class Parser {
     }
 
     private Expr assignment(){
-        Expr expr = tupleOrList();
+        Expr expr = monad();
 
         if (match(EQUAL)){
             Token equals = tokens.get(current - 1);
@@ -275,6 +275,23 @@ public class Parser {
 
             handler.outputErrorInfo("Invalid assignment target",equals.line);
         }
+        return expr;
+    }
+
+    //var result = monad.x.bind().bind();
+    private Expr monad(){
+        Expr expr;
+        List<Object> list = new ArrayList<>();
+
+        if (match(MONAD)){
+            while (match(DOT)){
+                list.add(assignment());
+            }
+            expr = new Monad(list);
+            return expr;
+        }
+        expr = tupleOrList();
+
         return expr;
     }
 

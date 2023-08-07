@@ -34,7 +34,7 @@ public class Type {
         }
     }
     // type list(a)  = <unit, (a, list(a))>
-// var a  : <unit,(any, a)> = tuple(3, b);
+    // var a  : <unit,(any, a)> = tuple(3, b);
     // var a  : <number,string>  = 3 ; // or 'hello world'
     public Type(PrimitiveType pt, List<Type> params) {
         this.pt = pt;

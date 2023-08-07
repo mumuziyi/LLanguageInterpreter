@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.example.Start.getTokenList;
+import static org.example.Start.line;
 
 public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
@@ -235,8 +236,30 @@ public class Interpreter {
         if (expr instanceof GetTupleLR) return evaluateGetTupleLR(expr);
         if (expr instanceof Include) return evaluateInclude(expr);
         if (expr instanceof ListExpr) return evaluateListExpr(expr);
+        if (expr instanceof Monad) return evaluateMonad(expr);
         return null;
     }
+
+    private Object evaluateMonad(Expr expr){
+        Monad monad = (Monad) expr;
+        List<Object> list = monad.list;
+        Object value = null;
+        if (list.size() == 1){
+            value = evaluate((Expr) list.get(0));
+        }else if (list.size() == 0){
+            handler.outputErrorInfo("Monad list is empty", -1);
+        }else {
+            value = evaluate((Expr) list.get(0));
+            for (int i = 1; i < list.size(); i++){
+                Call call = (Call) list.get(i);
+                value = executeCall(call,value);
+            }
+        }
+
+        return value;
+    }
+
+
 
     private Object evaluateListExpr(Expr expr){
         ListExpr listExpr = (ListExpr) expr;
@@ -370,6 +393,13 @@ public class Interpreter {
     private Object evaluateCall(Expr expr){
         Call call = (Call) expr;
 
+        return executeCall(call,null);
+
+
+    }
+
+    private Object executeCall(Call call, Object moreArguments){
+
         Object callee = evaluate(call.callee);
         FunDecl funDecl = (FunDecl)callee;
         Type requiredType = funDecl.returnType;
@@ -380,6 +410,10 @@ public class Interpreter {
 
         for (Expr argument : call.arguments){
             arguments.add(evaluate(argument));
+        }
+        // works for monad only
+        if (moreArguments != null){
+            arguments.add(moreArguments);
         }
 
         // prepare to execute
@@ -402,7 +436,6 @@ public class Interpreter {
 
         }
         return null;
-
     }
 
     private Object evaluateLogical(Expr expr){
