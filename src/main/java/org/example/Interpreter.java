@@ -24,6 +24,7 @@ public class Interpreter {
 
     // Only include statement use it;
     List<Stmt> ImportStmt;
+    Boolean reExecute = false; // If import, reExecute the ImportStmt.
 
     public Interpreter(Environment environment, Environment funEnv){
         this.environment = environment;
@@ -37,8 +38,16 @@ public class Interpreter {
     public void interpreter(List<Stmt> statements){
         ImportStmt = statements;
         try {
-            for (Stmt statement: statements){
+            for (Stmt statement: ImportStmt){
                 execute(statement);
+                if (reExecute){
+                    break;
+                }
+            }
+            if (reExecute){
+                for (Stmt statement: ImportStmt){
+                    execute(statement);
+                }
             }
         }catch (Exception e){
             if (!(e instanceof ReturnValue)){
@@ -285,9 +294,9 @@ public class Interpreter {
             MergedStmtList = another;
         }
 
-        Interpreter interpreter = new Interpreter();
-        interpreter.interpreter(another);
-        System.exit(0);
+        ImportStmt = another;
+        reExecute = true;
+
         return null;
     }
 
@@ -309,32 +318,32 @@ public class Interpreter {
 
         return expr;
     }
-    private void executeIncludeExpr(Expr expr){
-        Include importFileName = (Include)expr;
-        List<String> libList = importFileName.nameList;
-        String folderPath = "src/main/resources/Temp";
-        String targetName = "MergeTemp";
-
-        // If mergeTemp already exits, merge it with current lib
-        try {
-            BufferedReader reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
-                    + importFileName.nameList.get(0)));
-            BufferedReader reader2 = new BufferedReader(new FileReader(Start.filePath));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath + "/" + targetName));
-            mergeFile(reader1,reader2,writer);
-
-            for (int i = 1; i < libList.size(); i++){
-                reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
-                        + importFileName.nameList.get(i)));
-                reader2 = new BufferedReader(new FileReader(folderPath + "/" + targetName));
-                mergeFile(reader1,reader2,writer);
-            }
-        }catch (Exception e){
-            System.out.println(e);
-        }
-
-
-    }
+//    private void executeIncludeExpr(Expr expr){
+//        Include importFileName = (Include)expr;
+//        List<String> libList = importFileName.nameList;
+//        String folderPath = "src/main/resources/Temp";
+//        String targetName = "MergeTemp";
+//
+//        // If mergeTemp already exits, merge it with current lib
+//        try {
+//            BufferedReader reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
+//                    + importFileName.nameList.get(0)));
+//            BufferedReader reader2 = new BufferedReader(new FileReader(Start.filePath));
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath + "/" + targetName));
+//            mergeFile(reader1,reader2,writer);
+//
+//            for (int i = 1; i < libList.size(); i++){
+//                reader1 = new BufferedReader(new FileReader("src/main/resources/Library" + "/"
+//                        + importFileName.nameList.get(i)));
+//                reader2 = new BufferedReader(new FileReader(folderPath + "/" + targetName));
+//                mergeFile(reader1,reader2,writer);
+//            }
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
+//
+//
+//    }
 
     private void mergeFile(BufferedReader reader1, BufferedReader reader2, BufferedWriter writer){
 

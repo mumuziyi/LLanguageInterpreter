@@ -7,6 +7,7 @@ import org.example.stmt.Stmt;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,8 @@ public class Start {
     public static int line = 0;
     private static List<Token> tokenList = new LinkedList<>();
     public static boolean hadError = false;
+
+
     //        runFromTerminal();
 //        String filePath = "src/main/resources/declarationTest";
 //        String filePath = "src/main/resources/FlowControlTest";
@@ -35,12 +38,39 @@ public class Start {
 
 //    public static String filePath = "src/main/resources/Types/7TupleExprTest";
 //    public static String filePath = "src/main/resources/Types/8ListTest";
-    public static String filePath = "src/main/resources/Types/9MonadTest";
+//    public static String filePath = "src/main/resources/Types/9MonadTest";
 //    public static String filePath =  "src/main/resources/Library/Util.Lib";
     public static void main(String[] args) {
+        List<String> paths = new ArrayList<>();
+        paths.add("src/main/resources/Library/Util.Lib");
+        paths.add("src/main/resources/declarationTest");
+        paths.add("src/main/resources/FlowControlTest");
+        paths.add("src/main/resources/FunTest");
+        paths.add("src/main/resources/Types/ProductTypeTest");
+        paths.add("src/main/resources/Types/SumTypeTest");
+        paths.add("src/main/resources/Types/AnyTypeTest");
+        paths.add("src/main/resources/Types/4TupleGetTest");
+        paths.add("src/main/resources/Types/5FunTest");
+        paths.add("src/main/resources/Types/6LibTest");
+        paths.add("src/main/resources/Types/7TupleExprTest");
+        paths.add("src/main/resources/Types/8ListTest");
+        paths.add("src/main/resources/Types/9MonadTest");
+
+//        runFromFile(paths.get(9));
 
 
-        runFromFile(filePath);
+        for (String filepath: paths){
+
+            System.out.println("File <" + filepath + "> is running");
+            runFromFile(filepath);
+            line = 0;
+            tokenList = new ArrayList<>();
+            hadError = false;
+            System.out.println("Finish running \n");
+        }
+
+        System.out.println("Pass all the unit test");
+
     }
 
     // get code from terminal
