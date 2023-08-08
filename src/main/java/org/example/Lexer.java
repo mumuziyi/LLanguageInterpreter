@@ -45,6 +45,7 @@ public class Lexer {
         keywords.put("include",INCLUDE);
         keywords.put("funtype",FUNTYPE);
         keywords.put("monad",MONAD);
+        keywords.put("bind",BIND);
     }
 
     List<Token> tokenList = new LinkedList<>();

@@ -10,11 +10,9 @@ import org.example.type.Type;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.example.Start.getTokenList;
-import static org.example.Start.line;
 
 public class Interpreter {
     ErrorAndExceptionHandler handler = new ErrorAndExceptionHandler();
@@ -243,19 +241,19 @@ public class Interpreter {
         if (expr instanceof GetTupleLR) return evaluateGetTupleLR(expr);
         if (expr instanceof Include) return evaluateInclude(expr);
         if (expr instanceof ListExpr) return evaluateListExpr(expr);
-        if (expr instanceof Monad) return evaluateMonad(expr);
+        if (expr instanceof Bind) return evaluateBind(expr);
         return null;
     }
 
-    private Object evaluateMonad(Expr expr){
-        Monad monad = (Monad) expr;
-        List<Object> list = monad.list;
+    private Object evaluateBind(Expr expr){
+        Bind bind = (Bind) expr;
+        List<Object> list = bind.list;
         Object value = null;
 
         if (list.size() == 1){
             value = evaluate((Expr) list.get(0));
         }else if (list.size() == 0){
-            handler.outputErrorInfo("Monad list is empty", -1);
+            handler.outputErrorInfo("Bind list is empty", -1);
         }else {
             value = evaluate((Expr) list.get(0));
             for (int i = 1; i < list.size(); i++){
@@ -415,7 +413,7 @@ public class Interpreter {
         Function function = funDecl.function;
 
         List<Object> arguments = new ArrayList<>();
-        // works for monad only
+        // works for bing only
         if (moreArguments != null){
             arguments.add(moreArguments);
         }

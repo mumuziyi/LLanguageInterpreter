@@ -4,10 +4,10 @@ import org.example.expr.Expr;
 
 import java.util.List;
 
-public class Monad extends Expr {
+public class Bind extends Expr {
     public List<Object> list;
 
-    public Monad(List<Object> list) {
+    public Bind(List<Object> list) {
         this.list = list;
     }
 }

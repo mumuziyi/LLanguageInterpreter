@@ -17,29 +17,6 @@ public class Start {
     private static List<Token> tokenList = new LinkedList<>();
     public static boolean hadError = false;
 
-
-    //        runFromTerminal();
-//        String filePath = "src/main/resources/declarationTest";
-//        String filePath = "src/main/resources/FlowControlTest";
-//        public static String filePath = "src/main/resources/FunTest";
-//        String filePath = "src/main/resources/DataStructureTest";
-
-    // Week 6
-//        String filePath = "src/main/resources/Types/ProductTypeTest";
-//        String filePath = "src/main/resources/Types/SumTypeTest";
-
-    // Week 7
-//        public static String filePath = "src/main/resources/Types/AnyTypeTest";
-//        public static String filePath = "src/main/resources/Types/4TupleGetTest";
-//        public static String filePath = "src/main/resources/Types/5FunTest";
-//    public static String filePath = "src/main/resources/Types/6LibTest";
-
-    //Test
-
-//    public static String filePath = "src/main/resources/Types/7TupleExprTest";
-//    public static String filePath = "src/main/resources/Types/8ListTest";
-//    public static String filePath = "src/main/resources/Types/9MonadTest";
-//    public static String filePath =  "src/main/resources/Library/Util.Lib";
     public static void main(String[] args) {
         List<String> paths = new ArrayList<>();
         paths.add("src/main/resources/Library/Util.Lib");
@@ -54,7 +31,7 @@ public class Start {
         paths.add("src/main/resources/Types/6LibTest");
         paths.add("src/main/resources/Types/7TupleExprTest");
         paths.add("src/main/resources/Types/8ListTest");
-        paths.add("src/main/resources/Types/9MonadTest");
+        paths.add("src/main/resources/Types/9BindTest");
         paths.add("src/main/resources/BPMNTest/BPMNTest1");
 
 //        runFromFile(paths.get(paths.size() - 1));

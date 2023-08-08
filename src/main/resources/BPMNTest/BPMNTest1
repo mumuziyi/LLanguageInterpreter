@@ -1,6 +1,9 @@
 # include "BPMN1Fun.lib";
 
-var price = 100;
+var price:number = 100;
 var num = 1000;
 
-monad.getPM(price,num).getPrice().check().paid().notify();
+// numbers => tuple => number => number....
+// Not monad.
+
+bind.getPM(price,num).getPrice().check().paid().notify();

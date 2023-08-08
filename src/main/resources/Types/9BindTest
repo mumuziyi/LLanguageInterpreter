@@ -6,10 +6,7 @@ fun pot4(a){
     return a * a * a * a;
 }
 
-fun bind(a){
-    return a;
-}
 
 var x = 3;
 
-print monad.x.add3(1).pot4().pot4();
+print bind.x.add3(1).pot4().pot4();

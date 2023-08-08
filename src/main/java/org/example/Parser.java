@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.Structure.ListStructure;
-import org.example.Uitils.TypeChecker;
 import org.example.expr.*;
 import org.example.stmt.*;
 import org.example.type.Type;
@@ -262,7 +261,7 @@ public class Parser {
     }
 
     private Expr assignment(){
-        Expr expr = monad();
+        Expr expr = bind();
 
         if (match(EQUAL)){
             Token equals = tokens.get(current - 1);
@@ -278,16 +277,15 @@ public class Parser {
         return expr;
     }
 
-    //var result = monad.x.bind().bind();
-    private Expr monad(){
+    private Expr bind(){
         Expr expr;
         List<Object> list = new ArrayList<>();
 
-        if (match(MONAD)){
+        if (match(BIND)){
             while (match(DOT)){
                 list.add(assignment());
             }
-            expr = new Monad(list);
+            expr = new Bind(list);
             return expr;
         }
         expr = tupleOrList();

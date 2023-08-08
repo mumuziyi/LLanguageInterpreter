@@ -8,6 +8,7 @@ fun getPrice(a){
 }
 
 fun check(a){
+    var a = a;
     if( a >= 10000){
         return tuple(a, 0.2);
     }

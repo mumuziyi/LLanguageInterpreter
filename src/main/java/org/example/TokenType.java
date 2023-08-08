@@ -23,7 +23,7 @@ public enum TokenType {
 
     // List function
     GET_STRUCTURE, ADD_STRUCTURE,REMOVE_STRUCTURE,SIZE_STRUCTURE,
-    MONAD,
+    BIND,MONAD,
 
     EOF
 }
