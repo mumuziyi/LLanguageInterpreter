@@ -55,8 +55,9 @@ public class Start {
         paths.add("src/main/resources/Types/7TupleExprTest");
         paths.add("src/main/resources/Types/8ListTest");
         paths.add("src/main/resources/Types/9MonadTest");
+        paths.add("src/main/resources/BPMNTest/BPMNTest1");
 
-//        runFromFile(paths.get(9));
+//        runFromFile(paths.get(paths.size() - 1));
 
 
         for (String filepath: paths){

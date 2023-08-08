@@ -154,7 +154,7 @@ public class Lexer {
     }
 
     private boolean isChar(char c){
-        return (c >= 'a' && c <= 'z') || (c >'A' && c < 'Z');
+        return (c >= 'a' && c <= 'z') || (c >='A' && c <= 'Z');
     }
     private void number(){
         if (atEnd()){

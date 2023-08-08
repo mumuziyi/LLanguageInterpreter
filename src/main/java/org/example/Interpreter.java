@@ -124,8 +124,6 @@ public class Interpreter {
             for (Stmt stmt : blockStmts){
                 execute(stmt);
             }
-        }catch (Exception e){
-            System.out.println(e);
         }finally {
             this.environment = previous;
         }
@@ -253,6 +251,7 @@ public class Interpreter {
         Monad monad = (Monad) expr;
         List<Object> list = monad.list;
         Object value = null;
+
         if (list.size() == 1){
             value = evaluate((Expr) list.get(0));
         }else if (list.size() == 0){
@@ -416,14 +415,15 @@ public class Interpreter {
         Function function = funDecl.function;
 
         List<Object> arguments = new ArrayList<>();
-
-        for (Expr argument : call.arguments){
-            arguments.add(evaluate(argument));
-        }
         // works for monad only
         if (moreArguments != null){
             arguments.add(moreArguments);
         }
+
+        for (Expr argument : call.arguments){
+            arguments.add(evaluate(argument));
+        }
+
 
         // prepare to execute
         FunctionExecution execution = new FunctionExecution(function.name.lexeme,arguments,funEnv);

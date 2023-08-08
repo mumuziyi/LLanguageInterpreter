@@ -1,5 +1,5 @@
-fun add3(a){
-    return a + 3;
+fun add3(a,x){
+    return a + x + 2;
 }
 
 fun pot4(a){
@@ -12,5 +12,4 @@ fun bind(a){
 
 var x = 3;
 
-var result = monad.x.add3().pot4();
-print result;
+print monad.x.add3(1).pot4().pot4();

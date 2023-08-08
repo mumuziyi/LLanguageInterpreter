@@ -1,0 +1,6 @@
+# include "BPMN1Fun.lib";
+
+var price = 100;
+var num = 1000;
+
+monad.getPM(price,num).getPrice().check().paid().notify();

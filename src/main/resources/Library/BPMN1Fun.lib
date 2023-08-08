@@ -1,0 +1,28 @@
+fun getPM(a,b){
+    return tuple(a,b);
+}
+
+fun getPrice(a){
+    var tp = a;
+    return left(tp) * left(tp);
+}
+
+fun check(a){
+    if( a >= 10000){
+        return tuple(a, 0.2);
+    }
+    else if(a > 1000 and a < 10000){
+        return tuple(a, 0.1);
+    }else{
+        return tuple(a, 0);
+    }
+}
+
+fun paid(a){
+    var tp = a;
+    return left(tp) * (1 - right(tp));
+}
+
+fun notify(a){
+    print "You should pay " + a + " to company";
+}
