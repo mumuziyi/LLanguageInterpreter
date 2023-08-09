@@ -1,0 +1,56 @@
+fun choose(){
+}
+
+fun input(c1){
+    return c1;
+}
+
+fun Salad(){
+    return "Salad";
+}
+
+fun Pasta(){
+    return "Pasta";
+}
+
+fun Steak(){
+    return "Steak";
+}
+
+fun eat(food){
+    print "eat" + food;
+}
+
+fun save(food){
+    print "save the menu <" + food + "> to DB";
+}
+
+
+fun evaluateE(function){
+    return function();
+}
+
+fun Exclusive(choose, thenBranch, elseBranch){
+    if(choose == "yes") return thenBranch;
+    else return elseBranch;
+}
+
+fun Parallel(food,save,eat){
+    print("Start Para");
+    return tuple(tuple(food, save),tuple(food, eat));
+}
+
+fun evaluateP(functions){
+    var leftT = left(functions);
+    var rightT = right(functions);
+
+    var leftF = right(leftT);
+    var rightF = right(rightT);
+
+    leftF(left(leftT));
+    rightF(left(rightT));
+
+    print "Finish Parallel running";
+}
+
+

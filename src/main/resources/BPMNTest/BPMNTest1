@@ -1,4 +1,4 @@
-# include "BPMN1Fun.lib";
+# include "BPMN1Fun.lib","BPMN2Fun.lib";
 
 var price:number = 100;
 var num = 1000;
@@ -7,3 +7,16 @@ var num = 1000;
 // Not monad.
 
 bind.getPM(price,num).getPrice().check().paid().notify();
+
+print("-----------");
+
+var c1 = "no";
+var c2 = "no";
+
+bind.choose().input(c1).
+Exclusive(Salad, bind.input(c2).Exclusive(Pasta, Steak)).evaluateE().
+Parallel(save, eat).evaluateP();
+
+
+
+
