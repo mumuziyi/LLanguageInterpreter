@@ -10,3 +10,4 @@ fun pot4(a){
 var x = 3;
 
 print bind.x.add3(1).pot4().pot4();
+
