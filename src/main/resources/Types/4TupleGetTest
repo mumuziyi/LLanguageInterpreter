@@ -1,9 +1,13 @@
+# include "Util.lib";
+
 var test1:(number, (string, number)) = tuple(2,tuple("Hello",4));
 
 var test2 = tuple(3,test1);
 
 print test2;
 
-print "Recursive tuple call: " + left(right(right(test2)));
+var value = left(right(right(test2)));
+assertEqual(value, "Hello", "left(right(right(test2))) should be 'hello'");
 
-print left(tuple(2,4));
+var value = left(tuple(2,4));
+assertEqual(value, 2, "left(tuple(2,4)) should be 2");

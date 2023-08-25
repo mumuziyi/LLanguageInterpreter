@@ -1,3 +1,5 @@
+# include "Util.lib";
+
 fun sum(a, s) {
   var x;
   if (a == 5) {x = s;}
@@ -7,11 +9,7 @@ fun sum(a, s) {
 
 var result = sum(0, 0);
 
-print result;
-
-print "hello";
-var a = 10;
-print 1 + 2;
+assertEqual(result, 10, "sum(0, 0) should be 10");
 
 
 var a = list []:1:2:3;
@@ -23,4 +21,4 @@ for(var a = 0; a < 5; a = a + 1){
     sum = sum + a;
 }
 
-print sum;
+assertEqual(sum, 10, "sum should be 10");

@@ -22,7 +22,6 @@ public class Start {
         paths.add("src/main/resources/Library/Util.Lib");
         paths.add("src/main/resources/declarationTest");
         paths.add("src/main/resources/FlowControlTest");
-        paths.add("src/main/resources/FunTest");
         paths.add("src/main/resources/Types/ProductTypeTest");
         paths.add("src/main/resources/Types/SumTypeTest");
         paths.add("src/main/resources/Types/AnyTypeTest");
@@ -34,7 +33,7 @@ public class Start {
         paths.add("src/main/resources/Types/9BindTest");
         paths.add("src/main/resources/BPMNTest/BPMNTest1");
 
-//        runFromFile(paths.get(paths.size() - 1));
+
 
 
         for (String filepath: paths){
@@ -48,6 +47,8 @@ public class Start {
         }
 
         System.out.println("Pass all the unit test");
+
+//        runFromFile(paths.get(3));
 
     }
 

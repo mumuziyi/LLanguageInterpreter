@@ -4,7 +4,9 @@ PrintLine(exponent(2,3));
 
 var a = tuple(1,tuple(2,3));
 
-PrintLine(getLeft(a) + getLeft(getRight(a)) + getRight(getRight(a)) ) ;
+
+var value = getLeft(a) + getLeft(getRight(a)) + getRight(getRight(a));
+assertEqual(value, 6, "getLeft(a) + getLeft(getRight(a)) + getRight(getRight(a)) should be 6");
 
 print("----------");
 

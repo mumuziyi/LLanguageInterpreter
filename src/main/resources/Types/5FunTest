@@ -1,3 +1,4 @@
+# include "Util.lib";
 
 // return fun
 print "-------------return fun-------------";
@@ -9,7 +10,7 @@ fun add(a,b){
 }
 
 var returnTest = add(1,2);
-print returnTest(1,2);
+assertEqual(returnTest(1,2), 3, "returnTest(1,2) should be 3");
 
 // Return fun test
 
@@ -25,7 +26,8 @@ fun receive1(a,b:number){
     return a(b);
 }
 
-print receive1(receive0, 1);
+var value = receive1(receive0, 1);
+assertEqual(value, 1, "receive1(receive0, 1) should be 3");
 
 
 
@@ -46,7 +48,9 @@ fun g(a:(number, number)){
     return left(a) + right(a);
 }
 
-print g(f(tuple(1, tuple(2,3))));
+var value = g(f(tuple(1, tuple(2,3))));
+assertEqual(value, 6, "g(f(tuple(1, tuple(2,3)))) should be 6");
+
 
 fun compose(f,g,arg){
     return g(f(arg));
@@ -76,7 +80,8 @@ fun test(a:fun number,number -> number, arg1, arg2) : number{
     return a(arg1,arg2);
 }
 
-print test(add, 1, 2);
+var value = test(add, 1, 2);
+assertEqual(value, 3, "test(add, 1, 2) should be 6");
 
 
 // Error 1,
@@ -122,7 +127,7 @@ fun test(a:fun number,number -> string, arg1, arg2) : number{
     return 1;
 }
 
-print test(add, 1, 2);
+
 
 
 

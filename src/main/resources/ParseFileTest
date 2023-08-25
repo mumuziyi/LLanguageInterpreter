@@ -1,5 +1,39 @@
-var x = 1;
-print x;
-print 1 == 2;
-print 2 * ( 2 + 3);
-print "hello" + " world.";
+<process name="PurchaseProcess" targetNamespace="http://yourcompany.com/processes">
+    <startEvent name="InputEvent" />
+    <sequence>
+        <!-- Step 1: User Input -->
+        <receive name="GetUserInput" partnerLink="UserInputPL"
+        portType="tns:UserInputPortType" operation="getUserInputOperation" />
+        <!-- Step 2: Calculate Price -->
+        <assign name="CalculatePrice">
+            <copy>
+                <from>$inputVariable/quantity * $inputVariable/unitPrice</from>
+                <to>$priceVariable</to>
+            </copy>
+        </assign>
+        <!-- Step 3: Calculate Discount -->
+        <if name="CheckDiscount" xmlns:tns="http://yourcompany.com/processes">
+            <condition>$priceVariable &gt;= 100</condition>
+            <sequence>
+                <assign>
+                    <copy>
+                        <from>$priceVariable * 0.1</from>
+                        <to>$discountVariable</to>
+                    </copy>
+                </assign>
+            </sequence>
+        </if>
+        <!-- Step 4: Output Result -->
+        <reply name="OutputResult" partnerLink="UserInputPL"
+        portType="tns:UserInputPortType" operation="outputResultOperation">
+            <payload>
+                <tns:result>
+                    <tns:totalPrice>{$priceVariable}</tns:totalPrice>
+                    <tns:discount>{$discountVariable}</tns:discount>
+                </tns:result>
+            </payload>
+        </reply>
+    </sequence>
+
+    <endEvent name="ProcessCompleted" />
+</process>

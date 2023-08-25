@@ -23,6 +23,7 @@ fun add(a:number, b:number, c:string){
     print c;
 }
 
+print "didn't match error";
 add( 1, 2, "hello world");
 // didn't match error
 //add( 1,2,3);

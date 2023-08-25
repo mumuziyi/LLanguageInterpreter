@@ -1,3 +1,5 @@
+# include "Util.lib";
+
 fun add3(a,x){
     return a + x + 2;
 }
@@ -9,5 +11,6 @@ fun pot4(a){
 
 var x = 3;
 
-print bind.x.add3(1).pot4().pot4();
+var value = bind.x.add3(1).pot4();
+assertEqual(value, 1296, "value should be 1296");
 

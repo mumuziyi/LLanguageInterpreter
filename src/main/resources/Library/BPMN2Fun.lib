@@ -6,14 +6,17 @@ fun input(c1){
 }
 
 fun Salad(){
+    print "Order Salad";
     return "Salad";
 }
 
 fun Pasta(){
+print "Order Pasta";
     return "Pasta";
 }
 
 fun Steak(){
+    print "Order Steak";
     return "Steak";
 }
 
